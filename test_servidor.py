@@ -40,6 +40,8 @@ class TestSimpleHTTPServer(unittest.TestCase):
         self.assertIn(
             "<p>Este es un servidor simple que responde a solicitudes GET.</p>", response.text)
 
+        self.assertIn("<p>Web del \"Vibecoders Inc\".</p>", response.text)
+
         self.assertIn("<img src=\"https://cdn.prod.websitefiles.com/64fa82cbdeed167ebaefef84/64fa868eecc183a3dd76ab4c_603ec5023c4ad 8fde1783428_Ij2FnlaQX3wZEqCdfWmynR3kTFRlelafBXa21868XGfGWQiBv5FISkffcRaUhXrgoKiMX9FiLDGZ2jxwKGdt_vTyGUVHlqcm9uMjU BNQRgltzfgD3TulNwNixxWI2R3ay9vcAc7.jpeg\">", response.text)
 
 

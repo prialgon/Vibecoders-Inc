@@ -22,6 +22,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         <body>
             <h1>Hola desde un servidor Python</h1>
             <p>Este es un servidor simple que responde a solicitudes GET.</p>
+            <p>Web del "Vibecoders Inc".</p>
         </body>
         
         <img src="https://cdn.prod.websitefiles.com/64fa82cbdeed167ebaefef84/64fa868eecc183a3dd76ab4c_603ec5023c4ad 8fde1783428_Ij2FnlaQX3wZEqCdfWmynR3kTFRlelafBXa21868XGfGWQiBv5FISkffcRaUhXrgoKiMX9FiLDGZ2jxwKGdt_vTyGUVHlqcm9uMjU BNQRgltzfgD3TulNwNixxWI2R3ay9vcAc7.jpeg"> 
