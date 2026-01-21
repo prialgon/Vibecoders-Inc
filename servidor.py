@@ -1,10 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # Define el manejador de las solicitudes HTTP
+
+
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         # Define la respuesta HTTP
-        self.send_response(200)  # Código 200 significa que la solicitud fue exitosa
+        # Código 200 significa que la solicitud fue exitosa
+        self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
 
@@ -20,15 +23,20 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             <h1>Hola desde un servidor Python</h1>
             <p>Este es un servidor simple que responde a solicitudes GET.</p>
         </body>
+        
+        <img src="https://cdn.prod.websitefiles.com/64fa82cbdeed167ebaefef84/64fa868eecc183a3dd76ab4c_603ec5023c4ad 8fde1783428_Ij2FnlaQX3wZEqCdfWmynR3kTFRlelafBXa21868XGfGWQiBv5FISkffcRaUhXrgoKiMX9FiLDGZ2jxwKGdt_vTyGUVHlqcm9uMjU BNQRgltzfgD3TulNwNixxWI2R3ay9vcAc7.jpeg"> 
+        
         </html>"""
 
         # Escribir el contenido HTML en la respuesta
         self.wfile.write(html_content.encode("utf-8"))
 
+
 # Configura el servidor
 if __name__ == "__main__":
     # Define la dirección y el puerto
-    server_address = ("", 8000)  # Escucha en todas las interfaces en el puerto 8000
+    # Escucha en todas las interfaces en el puerto 8000
+    server_address = ("", 8000)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
 
     print("Servidor corriendo en el puerto 8000...")

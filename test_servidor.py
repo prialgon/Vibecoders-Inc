@@ -2,7 +2,8 @@ import unittest
 import threading
 import requests
 from http.server import HTTPServer
-from servidor import SimpleHTTPRequestHandler  
+from servidor import SimpleHTTPRequestHandler
+
 
 class TestSimpleHTTPServer(unittest.TestCase):
 
@@ -12,7 +13,8 @@ class TestSimpleHTTPServer(unittest.TestCase):
         cls.server_address = ('localhost', 8000)
         cls.httpd = HTTPServer(cls.server_address, SimpleHTTPRequestHandler)
         cls.server_thread = threading.Thread(target=cls.httpd.serve_forever)
-        cls.server_thread.daemon = True  # Permite detener el hilo cuando las pruebas terminen
+        # Permite detener el hilo cuando las pruebas terminen
+        cls.server_thread.daemon = True
         cls.server_thread.start()
 
     @classmethod
@@ -24,7 +26,8 @@ class TestSimpleHTTPServer(unittest.TestCase):
 
     def test_get_request(self):
         # Realiza una solicitud GET al servidor
-        response = requests.get(f'http://{self.server_address[0]}:{self.server_address[1]}')
+        response = requests.get(
+            f'http://{self.server_address[0]}:{self.server_address[1]}')
 
         # Verifica que el servidor responde con un código de estado 200
         self.assertEqual(response.status_code, 200)
@@ -34,7 +37,10 @@ class TestSimpleHTTPServer(unittest.TestCase):
 
         # Verifica que el contenido HTML esperado esté en la respuesta
         self.assertIn("<h1>Hola desde un servidor Python</h1>", response.text)
-        self.assertIn("<p>Este es un servidor simple que responde a solicitudes GET.</p>", response.text)
+        self.assertIn(
+            "<p>Este es un servidor simple que responde a solicitudes GET.</p>", response.text)
+
+        self.assertIn("<img src=\"https://cdn.prod.websitefiles.com/64fa82cbdeed167ebaefef84/64fa868eecc183a3dd76ab4c_603ec5023c4ad 8fde1783428_Ij2FnlaQX3wZEqCdfWmynR3kTFRlelafBXa21868XGfGWQiBv5FISkffcRaUhXrgoKiMX9FiLDGZ2jxwKGdt_vTyGUVHlqcm9uMjU BNQRgltzfgD3TulNwNixxWI2R3ay9vcAc7.jpeg\">", response.text)
 
 
 if __name__ == '__main__':
