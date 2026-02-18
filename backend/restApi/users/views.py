@@ -25,15 +25,16 @@ class UserRegisterView(generics.CreateAPIView):
 
             
 class UserProfileView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    
-class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserUpdateSerializer
-    queryset = User.objects.all()
+    def get_object(self):
+        return self.request.user
 
+    def get_serializer_class(self):
+        if self.request.method == "PUT":
+            return UserUpdateSerializer
+        return UserSerializer
     
-class ChangePasswordView(generics.UpdateAPIView):
+    
+class UserPasswordUpdateView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
 
     def get_object(self):
