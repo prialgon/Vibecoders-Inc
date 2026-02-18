@@ -1,8 +1,9 @@
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
 
-from users.serializers import UserSerializer, UserUpdateSerializer, ChangePasswordSerializer
+from users.serializers import UserSerializer, UserUpdateSerializer, ChangePasswordSerializer, LogoutSerializer
 from .models import User
 
 class UserRegisterView(generics.CreateAPIView):
@@ -48,4 +49,9 @@ class ChangePasswordView(generics.UpdateAPIView):
 
         return Response("Password updated successfully")
 
-
+class LogoutView(APIView):
+    def post(self, request):
+        serializer = LogoutSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response("Logged out successfully", status=status.HTTP_200_OK)
