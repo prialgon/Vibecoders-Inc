@@ -8,7 +8,7 @@ class Usage(models.Model):
     messages_used = models.IntegerField()
     messages_limit = models.IntegerField()
     reset_date = models.DateTimeField(default=timezone.now() + timedelta(days=30))
-    user_id = models.OneToOneField(User, related_name="usage", on_delete=models.CASCADE)
+    user_id = models.OneToOneField(User, related_name="usage", on_delete=models.CASCADE, primary_key=True, default=False)
     
     class Meta:
         ordering=('id',)
