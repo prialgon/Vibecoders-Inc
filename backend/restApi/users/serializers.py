@@ -8,6 +8,9 @@ from .validators import password_validation
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
+    
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password', 'password2')
