@@ -1,7 +1,10 @@
 from rest_framework import serializers
+from django.core.exceptions import ValidationError
 import re
 
 from .models import User
+from .validators import password_validation
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,21 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
         return value
     
     def validate_password(self, value):
-        if len(value) <= 8:
-            raise serializers.ValidationError(
-                {"password": "Minimum length is more than 8 characters."}
-            )
-        
-        if not any(character == character.upper() for character in value):
-            raise serializers.ValidationError(
-                {"password": "At least one character must be uppercase."}
-            )
-        
-        if not any(character == character.lower() for character in value):
-            raise serializers.ValidationError(
-                {"password": "At least one character must be lowercase."}
-            )
-        
+        value = password_validation(value)
         return value
     
     def validate(self, attrs):
@@ -60,6 +49,36 @@ class UserSerializer(serializers.ModelSerializer):
         validated_data.pop("password2")
         return User.objects.create_user(**validated_data)
     
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "email")
+        
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
     
+    def validate(self, attrs):
+        user = self.context['request'].user
+
+        if not user.check_password(attrs['old_password']):
+            raise serializers.ValidationError(
+                {"old_password": "Wrong password."}
+            )
+
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError(
+                {"password": "Passwords do not match."}
+            )
+
+        try:
+            password_validation(attrs['password'])
+        except ValidationError as e:
+            raise serializers.ValidationError(
+                {"password": e.messages}
+            )
+
+        return attrs
     
     
