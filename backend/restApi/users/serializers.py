@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
+from rest_framework_simplejwt.tokens import RefreshToken
 import re
 
 from .models import User
@@ -81,4 +82,12 @@ class ChangePasswordSerializer(serializers.Serializer):
 
         return attrs
     
-    
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    def validate(self, attrs):
+        self.token = RefreshToken(attrs["refresh"])
+        return attrs
+
+    def save(self, **kwargs):
+        self.token.blacklist()
