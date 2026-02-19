@@ -3,9 +3,9 @@ import re
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from usage.models import Usage
 
 from .models import User
-from usage.models import Usage
 from .validators import password_validation
 
 
@@ -61,7 +61,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password2")
         user = User.objects.create_user(**validated_data)
-        Usage.objects.create(user=user)
+        Usage.objects.create(user_id=user)
         return user
 
 

@@ -58,23 +58,19 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
 
         usage.messages_used += 1
         serializer.is_valid(raise_exception=True)
-        serializer.save(chat_id=chat)
+        # serializer.save(chat_id=chat)
         usage.save()
 
-        usage.messages_used += 1
         ChatMessage.objects.create(
-            chat=chat, role="user", content=serializer.validated_data["content"]
-        )
-        ChatMessage.objects.create(
-            chat=chat, role="user", content=serializer.validated_data["content"]
+            chat_id=chat, role="user", content=serializer.validated_data["content"]
         )
 
         history = [
             {"role": msg.role, "content": msg.content}
-            for msg in ChatMessage.objects.filter(chat=chat).order_by("id")
+            for msg in ChatMessage.objects.filter(chat_id=chat).order_by("id")
         ]
         llm_response = call_llm(history)
 
-        ChatMessage.objects.create(chat=chat, role="assistant", content=llm_response)
+        ChatMessage.objects.create(chat_id=chat, role="assistant", content=llm_response)
 
         return Response(serializer.data, status=201)
