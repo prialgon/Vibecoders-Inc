@@ -8,7 +8,8 @@ class ChatListCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = "__all__"
+        fields = ["id", "title", "created_at", "user_id"]
+        read_only_fields = ["user_id"]
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):
@@ -26,6 +27,12 @@ class ChatDetailSerializer(serializers.ModelSerializer):
 
 
 class ChatMessageCreateSerializer(serializers.ModelSerializer):
+    role = serializers.ReadOnlyField()
+
     class Meta:
         model = ChatMessage
         fields = ["role", "content"]
+
+    def create(self, validated_data):
+        validated_data["role"] = "user"  # fuerza siempre "user"
+        return super().create(validated_data)

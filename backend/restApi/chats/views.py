@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,13 +15,26 @@ from .serializers import (
 
 
 class ChatListView(generics.ListCreateAPIView):
-    queryset = Chat.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = ChatListCreateSerializer
+
+    def get_queryset(self):
+        user_id = self.request.user
+        queryset = Chat.objects.filter(user_id=user_id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)
 
 
 class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
-    queryset = Chat.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = ChatDetailSerializer
+
+    def get_queryset(self):
+        user_id = self.request.user
+        queryset = Chat.objects.filter(user_id=user_id)
+        return queryset
 
     def post(self, request, *args, **kwargs):
         chat = self.get_object()
