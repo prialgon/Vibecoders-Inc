@@ -17,7 +17,7 @@ class ChatMessage(models.Model):
 
     role = models.CharField(choices=ROLE_CHOICES)
     content = models.TextField()
-    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat_id = models.ForeignKey(Chat, related_name="messages", on_delete=models.CASCADE)
 
     class Meta:
         ordering = ("id",)
