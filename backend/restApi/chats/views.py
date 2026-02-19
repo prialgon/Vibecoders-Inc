@@ -57,6 +57,11 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
                 usage.reset_date = timezone.now() + timedelta(days=30)
 
         usage.messages_used += 1
+        serializer.is_valid(raise_exception=True)
+        serializer.save(chat_id=chat)
+        usage.save()
+
+        usage.messages_used += 1
         ChatMessage.objects.create(
             chat=chat, role="user", content=serializer.validated_data["content"]
         )

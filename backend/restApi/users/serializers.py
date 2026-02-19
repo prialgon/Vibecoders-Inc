@@ -5,6 +5,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
+from usage.models import Usage
 from .validators import password_validation
 
 
@@ -59,7 +60,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2")
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        Usage.objects.create(user=user)
+        return user
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
