@@ -2,11 +2,14 @@ from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from users.serializers import UserSerializer, UserUpdateSerializer, ChangePasswordSerializer, LogoutSerializer
 from .models import User
 
 class UserRegisterView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -25,6 +28,8 @@ class UserRegisterView(generics.CreateAPIView):
 
             
 class UserProfileView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    
     def get_object(self):
         return self.request.user
 
@@ -35,6 +40,8 @@ class UserProfileView(generics.RetrieveAPIView):
     
     
 class UserPasswordUpdateView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    
     serializer_class = ChangePasswordSerializer
 
     def get_object(self):
@@ -51,6 +58,7 @@ class UserPasswordUpdateView(generics.UpdateAPIView):
         return Response("Password updated successfully")
 
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = LogoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
