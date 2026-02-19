@@ -1,9 +1,12 @@
+from datetime import timedelta
+
+from ai.llm_service import call_llm
+from django.utils import timezone
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.utils import timezone
-from datetime import timedelta
+from usage.models import Usage
 
 from .models import Chat, ChatMessage
 from .serializers import (
@@ -11,7 +14,6 @@ from .serializers import (
     ChatListCreateSerializer,
     ChatMessageCreateSerializer,
 )
-from usage.models import Usage
 
 # Create your views here.
 
@@ -41,9 +43,9 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
     def post(self, request, *args, **kwargs):
         chat = self.get_object()
         serializer = ChatMessageCreateSerializer(data=request.data)
-        
+
         usage: Usage = self.request.user.usage
-        
+
         if usage.messages_used >= usage.messages_limit:
             if usage.reset_date > timezone.now():
                 return Response(
@@ -53,11 +55,21 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
             else:
                 usage.messages_used = 0
                 usage.reset_date = timezone.now() + timedelta(days=30)
-                
-        usage.messages_used += 1
-        serializer.is_valid(raise_exception=True)
-        serializer.save(chat_id=chat)
-        return Response(serializer.data, status=201)
-        
-        
 
+        usage.messages_used += 1
+        ChatMessage.objects.create(
+            chat=chat, role="user", content=serializer.validated_data["content"]
+        )
+        ChatMessage.objects.create(
+            chat=chat, role="user", content=serializer.validated_data["content"]
+        )
+
+        history = [
+            {"role": msg.role, "content": msg.content}
+            for msg in ChatMessage.objects.filter(chat=chat).order_by("id")
+        ]
+        llm_response = call_llm(history)
+
+        ChatMessage.objects.create(chat=chat, role="assistant", content=llm_response)
+
+        return Response(serializer.data, status=201)

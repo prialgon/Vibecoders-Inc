@@ -32,7 +32,3 @@ class ChatMessageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMessage
         fields = ["role", "content"]
-
-    def create(self, validated_data):
-        validated_data["role"] = "user"  # fuerza siempre "user"
-        return super().create(validated_data)
