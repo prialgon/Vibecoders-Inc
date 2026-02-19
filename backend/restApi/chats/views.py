@@ -12,6 +12,6 @@ class ChatListView(generics.ListCreateAPIView):
     serializer_class = ChatListCreateSerializer
 
 
-class ChatMessagesListView(generics.ListCreateAPIView):
+class ChatMessagesListView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Chat.objects.all()
-    serializer_class = ChatListView
+    serializer_class = ChatDetailSerializer
