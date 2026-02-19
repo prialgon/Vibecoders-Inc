@@ -1,8 +1,9 @@
-from django.shortcuts import render
 from rest_framework import generics
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.utils import timezone
+from datetime import timedelta
 
 from .models import Chat, ChatMessage
 from .serializers import (
@@ -10,6 +11,7 @@ from .serializers import (
     ChatListCreateSerializer,
     ChatMessageCreateSerializer,
 )
+from usage.models import Usage
 
 # Create your views here.
 
@@ -39,6 +41,23 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
     def post(self, request, *args, **kwargs):
         chat = self.get_object()
         serializer = ChatMessageCreateSerializer(data=request.data)
+        
+        usage: Usage = self.request.user.usage
+        
+        if usage.messages_used >= usage.messages_limit:
+            if usage.reset_date > timezone.now():
+                return Response(
+                    f"Messages limit ({usage.messages_limit}) has been reached. Message limit will be reset on {usage.reset_date}.",
+                    status=403,
+                )
+            else:
+                usage.messages_used = 0
+                usage.reset_date = timezone.now() + timedelta(days=30)
+                
+        usage.messages_used += 1
         serializer.is_valid(raise_exception=True)
         serializer.save(chat_id=chat)
         return Response(serializer.data, status=201)
+        
+        
+
