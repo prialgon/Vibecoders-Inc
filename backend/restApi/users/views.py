@@ -27,8 +27,10 @@ class UserRegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
             
-class UserProfileView(generics.RetrieveAPIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
+    
+    http_method_names = ['get', 'put']
     
     def get_object(self):
         return self.request.user
@@ -43,6 +45,8 @@ class UserPasswordUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     
     serializer_class = ChangePasswordSerializer
+    
+    http_method_names = ['put']
 
     def get_object(self):
         return self.request.user
