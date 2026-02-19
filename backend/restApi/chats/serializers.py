@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Chat
+from .models import Chat, ChatMessage
 
 
 class ChatListCreateSerializer(serializers.ModelSerializer):
@@ -11,7 +11,21 @@ class ChatListCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ChatMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        fields = "__all__"
+
+
 class ChatDetailSerializer(serializers.ModelSerializer):
+    messages = ChatMessageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Chat
-        fields = "__all__"
+        fields = ["messages"]
+
+
+class ChatMessageCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        fields = ["role", "content"]
