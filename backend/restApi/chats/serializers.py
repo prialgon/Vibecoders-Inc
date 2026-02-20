@@ -15,7 +15,7 @@ class ChatListCreateSerializer(serializers.ModelSerializer):
 class ChatMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMessage
-        fields = "__all__"
+        fields = ["role", "content"]
 
 
 class ChatDetailSerializer(serializers.ModelSerializer):

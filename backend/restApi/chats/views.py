@@ -13,6 +13,7 @@ from .serializers import (
     ChatDetailSerializer,
     ChatListCreateSerializer,
     ChatMessageCreateSerializer,
+    ChatMessageSerializer,
 )
 
 # Create your views here.
@@ -71,6 +72,8 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
         ]
         llm_response = call_llm(history)
 
-        ChatMessage.objects.create(chat_id=chat, role="assistant", content=llm_response)
-
-        return Response(serializer.data, status=201)
+        msg = ChatMessage.objects.create(
+            chat_id=chat, role="assistant", content=llm_response
+        )
+        serializer_llm = ChatMessageSerializer(msg)
+        return Response(serializer_llm.data, status=201)
