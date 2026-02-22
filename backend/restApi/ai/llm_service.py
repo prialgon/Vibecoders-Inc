@@ -1,5 +1,6 @@
+from typing import Dict, List
+
 import ollama
-from typing import List, Dict
 
 OLLAMA_HOST = "http://localhost:11434"
 MODEL = "llama3.2:3b"  # modelo configurado desde Ollama Web UI
