@@ -1,8 +1,9 @@
+import os
 from typing import Dict, List
 
 import ollama
 
-OLLAMA_HOST = "http://localhost:11434"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST")
 MODEL = "llama3.2:3b"  # modelo configurado desde Ollama Web UI
 
 # Ejemplo de la variable mensajes:
