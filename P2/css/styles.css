@@ -136,6 +136,12 @@ input {
     color: #c0c0c0;
 }
 
-.center-forgot-password {
+.center-text-with-margin {
     margin-top: 2%;
+}
+
+#error-text {
+    color: red;
+    font-size: 1rem;
+    margin: 0.5rem;
 }

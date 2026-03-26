@@ -8,6 +8,9 @@ const registerForm = document.getElementById("register-form");
 if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    document.getElementById("error-text").textContent = "";
+
     let loginPayload = {
       username: document.getElementById("username").value,
       password: document.getElementById("password").value,
