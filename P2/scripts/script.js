@@ -9,7 +9,7 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     let loginPayload = {
-      username: document.getElementById("email").value,
+      username: document.getElementById("username").value,
       password: document.getElementById("password").value,
     };
 
@@ -36,7 +36,8 @@ if (registerForm) {
   registerForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     let registerPayload = {
-      username: document.getElementById("email").value,
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
       password1: document.getElementById("password1").value,
       password2: document.getElementById("password2").value,
     };
