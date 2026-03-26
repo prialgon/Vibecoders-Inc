@@ -131,3 +131,7 @@ input {
     border-width: 0.1rem;
     box-shadow: 0 -0.03rem black;
 }
+
+.copyright {
+    color: #c0c0c0;
+}
