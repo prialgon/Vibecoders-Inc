@@ -1,55 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css"/>
-    <link rel="stylesheet" href="../css/normalize.css">
-    <title>Demo</title>
-</head>
-<body class="layout">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <title>VibeGPT | Register</title>
+  </head>
+  <body class="layout">
     <header class="header center">
-        <h1 class="mammoth-text">VibeGPT</h1>
+      <h1 class="mammoth-text">VibeGPT</h1>
     </header>
 
     <main class="register center">
-        <form class="center" id="register-form">
-            <div class="window-header">
-                <p class="window-header-text">Register</p>
-                <img src="../imgs/close.png" class="close">
-            </div>
-            <div class="form-content" >
-                <h2 class="center">Create account</h2>
-                
-                <input id="username" type="text" name="username" placeholder="Username" required>
+      <form class="center" id="register-form">
+        <div class="window-header">
+          <p class="window-header-text">Register</p>
+          <img src="../imgs/close.png" class="close" />
+        </div>
+        <div class="form-content">
+          <h2 class="center">Create account</h2>
 
-                <input id="email" type="email" name="email" placeholder="Email" required>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+          />
 
-                <input id="password1" type="password" name="password1" placeholder="Password" required>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
 
-                <input id="password2" type="password" name="password2" placeholder="Re-enter password" required>
+          <input
+            id="password1"
+            type="password"
+            name="password1"
+            placeholder="Password"
+            required
+          />
 
-                <p id="error-text" class="center"></p>
+          <input
+            id="password2"
+            type="password"
+            name="password2"
+            placeholder="Re-enter password"
+            required
+          />
 
-                <button type="submit" form="register-form">Create</button>
+          <p id="error-text" class="center"></p>
 
-                <a href="login.html" class="center center-text-with-margin">Already have an account</a> 
-            </div>
-        </form>
+          <button type="submit" form="register-form">Create</button>
+
+          <a href="login.html" class="center center-text-with-margin"
+            >Already have an account</a
+          >
+        </div>
+      </form>
     </main>
 
     <div class="assistant-container">
-        <div class="speech-bubble">
-            Welcome to VibeGPT!
-        </div>
-        <img src="../imgs/clippy.webp" class="floppy-character">
+      <div class="speech-bubble">Welcome to VibeGPT!</div>
+      <img src="../imgs/clippy.webp" class="floppy-character" />
     </div>
 
     <footer class="footer center">
-        <p class="copyright">Copyright © 2026 Vibecoders Inc.</p>
+      <p class="copyright">Copyright © 2026 Vibecoders Inc.</p>
     </footer>
     <script src="../scripts/script.js"></script>
-
-
-</body>
+  </body>
 </html>

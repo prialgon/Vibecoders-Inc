@@ -1,50 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css"/>
-    <link rel="stylesheet" href="../css/normalize.css">
-    <title>Demo</title>
-</head>
-<body class="layout">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <title>VibeGPT | Login</title>
+  </head>
+  <body class="layout">
     <header class="header center">
-        <h1 class="mammoth-text">VibeGPT</h1>
+      <h1 class="mammoth-text">VibeGPT</h1>
     </header>
 
     <main class="register center">
-        <form class="center" id="login-form">
-            <div class="window-header">
-                <p class="window-header-text">Login</p>
-                <img src="../imgs/close.png" class="close">
-            </div>
-            <div class="form-content" >
-                <h2 class="center">Login</h2>
-                <input id="username" required type="text" name="username" placeholder="Username">
-        
-                <input type="password"  required placeholder="Password" name="password" id="password">
+      <form class="center" id="login-form">
+        <div class="window-header">
+          <p class="window-header-text">Login</p>
+          <img src="../imgs/close.png" class="close" />
+        </div>
+        <div class="form-content">
+          <h2 class="center">Login</h2>
+          <input
+            id="username"
+            required
+            type="text"
+            name="username"
+            placeholder="Username"
+          />
 
-                <p id="error-text" class="center"></p>
+          <input
+            type="password"
+            required
+            placeholder="Password"
+            name="password"
+            id="password"
+          />
 
-                <button type="submit" form="login-form">Login</button>
+          <p id="error-text" class="center"></p>
 
-                <a href="" class="center center-text-with-margin">Forgot password?</a> 
+          <button type="submit" form="login-form">Login</button>
 
-                <a href="register.html" class="center center-text-with-margin">I don't have an account</a> 
-            </div>
-        </form>
+          <a href="" class="center center-text-with-margin">Forgot password?</a>
+
+          <a href="register.html" class="center center-text-with-margin"
+            >I don't have an account</a
+          >
+        </div>
+      </form>
     </main>
 
     <div class="assistant-container">
-        <div class="speech-bubble">
-            Welcome back, friend!
-        </div>
-        <img src="../imgs/clippy.webp" class="floppy-character">
+      <div class="speech-bubble">Welcome back, friend!</div>
+      <img src="../imgs/clippy.webp" class="floppy-character" />
     </div>
 
     <footer class="footer center">
-        <p class="copyright">Copyright © 2026 Vibecoders Inc.</p>
+      <p class="copyright">Copyright © 2026 Vibecoders Inc.</p>
     </footer>
     <script src="../scripts/script.js"></script>
-</body>
+  </body>
 </html>
