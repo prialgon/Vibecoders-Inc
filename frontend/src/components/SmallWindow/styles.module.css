@@ -1,0 +1,43 @@
+.windowHeader {
+  grid-area: form-header;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  background-color: #3550e4;
+  width: 100%;
+}
+
+.windowHeaderText {
+  color: white;
+  margin: 0%;
+  margin-left: 2%;
+  margin-top: 1.5%;
+  font-size: 90%;
+}
+
+.close {
+  width: 6%;
+  height: fit-content;
+  border-radius: 0.2rem;
+  margin: 0.75%;
+}
+
+.window {
+  display: grid;
+  grid-template-columns: 10%, 90%;
+  grid-template-areas: "form-header" "content";
+  background-color: #c0c0c0;
+  border-style: solid;
+  border-color: #777777;
+  border-width: 3px;
+}
+
+.content {
+  display: flex;
+  grid-area: content;
+  flex-direction: column;
+  gap: 2%;
+  padding: 4rem;
+  padding-top: 0%;
+}
