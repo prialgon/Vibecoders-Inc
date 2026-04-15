@@ -1,30 +1,4 @@
-
-.register_button {
-    margin-top: 5%;
-    width: 20rem;
-    height: 2.75rem;
-    padding: 0 0.75rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-    color: black;
-    background-color: #c0c0c0;
-    border-width: 0.1rem;
-    transition: all 0.01s ease;
-    border-color: #777777;
-    box-shadow: 0 0.1rem black;
-    
-}
-
-.button:hover {
-    background-color: darkgray;
-}
-
-.button:active {
-    transform: translateY(0.1rem);
-    box-shadow: 0 0.05rem black;
-}
-
-.form_input {
+.formInput {
     width: 20rem;
     height: 2.75rem;
     padding: 0 0.75rem;
@@ -35,7 +9,7 @@
 }
 
 
-.assistant_container {
+.assistantContainer {
   position: fixed;
   bottom: 4%;
   right: 0.1%;
@@ -49,12 +23,12 @@
   animation-delay: 4s; 
 }
 
-.floppy_character {
+.floppyCharacter {
   width: 50%;
   filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
 }
 
-.speech_bubble {
+.speechBubble {
   background: #ffffe1; 
   border: 1px solid black;
   border-radius: 5px;
@@ -67,7 +41,7 @@
   position: relative;
 }
 
-.speech_bubble::after {
+.speechBubble::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -78,7 +52,7 @@
   border-color: black transparent transparent transparent;
 }
 
-.speech_bubble::before {
+.speechBubble::before {
   content: '';
   position: absolute;
   bottom: -8px;
