@@ -1,5 +1,6 @@
 import styles from "./page.module.css";
 import SmallWindow from "@/components/SmallWindow/SmallWindow";
+import Form from "@/components/Form/Form";
 
 export default function Register() {
   return (
@@ -8,9 +9,16 @@ export default function Register() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>VibeGPT | Register</title>
       <SmallWindow>
-        <form id="register-form">
+        <Form
+          title="Register"
+          id="registerForm"
+          buttonText="Create account"
+          errorId="loginError"
+          extra={<a href="/login">I already have an account</a>}
+        >
           <h2>Create account</h2>
           <input
+            className={styles.formInput}
             id="username"
             type="text"
             name="username"
@@ -18,6 +26,7 @@ export default function Register() {
             required=""
           />
           <input
+            className={styles.formInput}
             id="email"
             type="email"
             name="email"
@@ -25,6 +34,7 @@ export default function Register() {
             required=""
           />
           <input
+            className={styles.formInput}
             id="password1"
             type="password"
             name="password1"
@@ -32,26 +42,18 @@ export default function Register() {
             required=""
           />
           <input
+            className={styles.formInput}
             id="password2"
             type="password"
             name="password2"
             placeholder="Re-enter password"
             required=""
           />
-          <p id="error-text" />
-          <button
-            type="submit"
-            form="register-form"
-            className={styles.register_button}
-          >
-            Create
-          </button>
-          <a href="login">Already have an account</a>
-        </form>
+        </Form>
       </SmallWindow>
-      <div className={styles.assistant_container}>
-        <div className={styles.speech_bubble}>Welcome to VibeGPT!</div>
-        <img src="/imgs/clippy.webp" className={styles.floppy_character} />
+      <div className={styles.assistantContainer}>
+        <div className={styles.speechBubble}>Welcome to VibeGPT!</div>
+        <img src="/imgs/clippy.webp" className={styles.floppyCharacter} />
       </div>
     </>
   );
