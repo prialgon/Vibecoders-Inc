@@ -1,0 +1,100 @@
+
+.register_button {
+    margin-top: 5%;
+    width: 20rem;
+    height: 2.75rem;
+    padding: 0 0.75rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    color: black;
+    background-color: #c0c0c0;
+    border-width: 0.1rem;
+    transition: all 0.01s ease;
+    border-color: #777777;
+    box-shadow: 0 0.1rem black;
+    
+}
+
+.button:hover {
+    background-color: darkgray;
+}
+
+.button:active {
+    transform: translateY(0.1rem);
+    box-shadow: 0 0.05rem black;
+}
+
+.form_input {
+    width: 20rem;
+    height: 2.75rem;
+    padding: 0 0.75rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border-width: 0.1rem;
+    box-shadow: 0 -0.03rem black;
+}
+
+
+.assistant_container {
+  position: fixed;
+  bottom: 4%;
+  right: 0.1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 998;
+  transform: translateY(200%);
+  
+  animation: popUp 0.8s ease-out forwards;
+  animation-delay: 4s; 
+}
+
+.floppy_character {
+  width: 50%;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+
+.speech_bubble {
+  background: #ffffe1; 
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 12px;
+  max-width: 150px;
+  text-align: center;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.speech_bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.speech_bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  margin-left: -4px;
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #ffffe1 transparent transparent transparent;
+  z-index: 1;
+}
+
+@keyframes popUp {
+  from {
+    transform: translateY(200%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
