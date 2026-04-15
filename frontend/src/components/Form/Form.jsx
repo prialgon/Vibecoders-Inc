@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 const Form = ({ title, id, children, buttonText, extra, errorId }) => {
   return (
-    <form id={id} className={styles.form}>
+    <form id={id}>
       <h2>{title}</h2>
       <div className={styles.formChildren}>{children}</div>
       <p id={errorId} className={styles.error}/>
