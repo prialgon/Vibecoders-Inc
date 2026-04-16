@@ -51,10 +51,6 @@ export default function Register() {
           />
         </Form>
       </SmallWindow>
-      <div className={styles.assistantContainer}>
-        <div className={styles.speechBubble}>Welcome to VibeGPT!</div>
-        <img src="/imgs/clippy.webp" className={styles.floppyCharacter} />
-      </div>
     </>
   );
 }
