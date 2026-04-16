@@ -1,6 +1,10 @@
+"use client";
+
 import styles from "./page.module.css";
 import SmallWindow from "@/components/SmallWindow/SmallWindow";
 import Form from "@/components/Form/Form";
+import Link from "next/link";
+import { doRegister } from "./utils";
 
 export default function Register() {
   return (
@@ -13,8 +17,9 @@ export default function Register() {
           title="Register"
           id="registerForm"
           buttonText="Create account"
-          errorId="loginError"
-          extra={<a href="/login">I already have an account</a>}
+          errorId="registerError"
+          onSubmit={doRegister}
+          extra={<Link href="/login">I already have an account</Link>}
         >
           <input
             className={styles.formInput}
