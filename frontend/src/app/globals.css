@@ -34,7 +34,11 @@ html {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: white;
+  background-image: url("/imgs/bliss.jpg");
+  background-size: cover;
+  background-position: center;
+
   font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
