@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-const Form = ({ title, id, children, buttonText, extra, errorId }) => {
+const Form = ({ title, id, children, buttonText, extra, errorId, onSubmit }) => {
   return (
-    <form id={id}>
+    <form id={id} onSubmit={onSubmit}>
       <h2>{title}</h2>
       <div className={styles.formChildren}>{children}</div>
       <p id={errorId} className={styles.error}/>
