@@ -1,7 +1,9 @@
+"use client";
 import styles from "./page.module.css";
 import SmallWindow from "@/components/SmallWindow/SmallWindow";
 import Form from "@/components/Form/Form";
 import Link from "next/link";
+import { doLogin } from "./utils";
 
 export default function Login() {
   return (
@@ -15,6 +17,7 @@ export default function Login() {
           id="loginForm"
           buttonText="Login"
           errorId="loginError"
+          onSubmit={doLogin}
           extra={<Link href="/register">Create your account</Link>}
         >
           <input
