@@ -28,12 +28,23 @@ body {
   height: 100%;
 }
 
+html {
+  font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 * {

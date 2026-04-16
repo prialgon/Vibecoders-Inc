@@ -16,7 +16,6 @@ export default function Register() {
           errorId="loginError"
           extra={<a href="/login">I already have an account</a>}
         >
-          <h2>Create account</h2>
           <input
             className={styles.formInput}
             id="username"
@@ -51,10 +50,6 @@ export default function Register() {
           />
         </Form>
       </SmallWindow>
-      <div className={styles.assistantContainer}>
-        <div className={styles.speechBubble}>Welcome to VibeGPT!</div>
-        <img src="/imgs/clippy.webp" className={styles.floppyCharacter} />
-      </div>
     </>
   );
 }
