@@ -1,4 +1,4 @@
-let login_url = "http://localhost:8000/api/auth/login/";
+const loginUrl = "http://localhost:8000/api/auth/login/";
 
 const handleError = (response) => {
   let allErrors = "";
@@ -20,7 +20,7 @@ export const doLogin = async (event) => {
   };
 
   try {
-    let response = await fetch(login_url, {
+    const response = await fetch(loginUrl, {
       method: "POST",
       body: JSON.stringify(loginPayload),
       headers: {
