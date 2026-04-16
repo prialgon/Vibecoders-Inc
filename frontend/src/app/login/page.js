@@ -11,7 +11,7 @@ export default function Login() {
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>VibeGPT | Login</title>
-      <SmallWindow>
+      <SmallWindow title="Login">
         <Form
           title="Login"
           id="loginForm"

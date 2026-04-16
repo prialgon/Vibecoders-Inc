@@ -1,0 +1,7 @@
+.header {
+  display: flex;
+  grid-area: header;
+  padding: 3%;
+  justify-content: center;
+  align-items: center;
+}
