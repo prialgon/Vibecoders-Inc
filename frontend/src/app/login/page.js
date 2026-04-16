@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import SmallWindow from "@/components/SmallWindow/SmallWindow";
 import Form from "@/components/Form/Form";
+import Link from "next/link";
 
 export default function Login() {
   return (
@@ -14,7 +15,7 @@ export default function Login() {
           id="loginForm"
           buttonText="Login"
           errorId="loginError"
-          extra={<a href="/register">Create your account</a>}
+          extra={<Link href="/register">Create your account</Link>}
         >
           <input
             className={styles.formInput}
