@@ -16,7 +16,6 @@ export default function Login() {
           errorId="loginError"
           extra={<a href="/register">Create your account</a>}
         >
-          <h2>Log in</h2>
           <input
             className={styles.formInput}
             id="username"

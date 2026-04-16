@@ -16,7 +16,6 @@ export default function Register() {
           errorId="loginError"
           extra={<a href="/login">I already have an account</a>}
         >
-          <h2>Create account</h2>
           <input
             className={styles.formInput}
             id="username"
