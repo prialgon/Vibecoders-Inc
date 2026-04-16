@@ -1,8 +1,8 @@
 .formButton {
-  margin-top: 5%;
   width: 20rem;
   height: 2.75rem;
-  padding: 0 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
   font-size: 1rem;
   box-sizing: border-box;
   color: black;
@@ -29,6 +29,7 @@
   gap: 2%;
   padding: 4rem;
   padding-top: 0%;
+  padding-bottom: 0%;
 }
 
 .extra {
@@ -41,9 +42,10 @@
   margin: 0.5rem;
 }
 
-.center {
+.mainForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5%;
 }

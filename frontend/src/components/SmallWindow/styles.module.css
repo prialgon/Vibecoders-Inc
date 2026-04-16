@@ -39,6 +39,8 @@
   gap: 2%;
   padding: 4rem;
   padding-top: 0%;
+  padding-bottom: 0%;
   height: 100%;
   align-items: center;
+  justify-content: center;
 }
