@@ -1,0 +1,15 @@
+.messageContainer {
+  max-width: 50%;
+  background-color: blue;
+  padding: 50%;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
