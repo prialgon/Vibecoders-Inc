@@ -1,15 +1,18 @@
 .messageContainer {
   max-width: 50%;
   background-color: blue;
-  padding: 50%;
-  border-radius: 30%;
+  padding: 2%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
+  height: fit-content;
 }
 
 .message {
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }

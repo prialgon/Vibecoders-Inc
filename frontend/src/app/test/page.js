@@ -10,6 +10,20 @@ export default function Test() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0>" />
       <ChatWindow title="Test">
         <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
+        <ChatMessage message={"Hello, World!"} />
       </ChatWindow>
     </>
   );
