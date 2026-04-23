@@ -48,6 +48,17 @@ select {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+
+  cursor: url("/imgs/pointer.png"), auto;
+}
+a,
+button {
+  cursor: url("/imgs/pointer.png"), pointer;
+}
+
+input,
+textarea {
+  cursor: url("/imgs/pointer.png"), text;
 }
 
 a {
