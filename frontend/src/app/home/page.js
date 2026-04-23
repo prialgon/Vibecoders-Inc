@@ -4,9 +4,5 @@ import styles from "./page.module.css";
 import Taskbar from "@/components/Taskbar/Taskbar";
 
 export default function Home() {
-  return (
-    <>
-      <Taskbar></Taskbar>
-    </>
-  );
+  return <>Hello world</>;
 }
