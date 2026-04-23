@@ -1,10 +1,21 @@
+.messageRow {
+  width: 100%;
+  display: flex;
+}
+
+.leftMessageContainer {
+  justify-content: flex-start;
+}
+
+.rightMessageContainer {
+  justify-content: flex-end;
+}
+
 .messageContainer {
   max-width: 50%;
   background-color: blue;
   padding: 2%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: fit-content;
   height: fit-content;
 }
@@ -15,4 +26,16 @@
   align-items: center;
   white-space: normal;
   overflow-wrap: anywhere;
+}
+
+.leftMessage {
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+.rightMessage {
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
 }
