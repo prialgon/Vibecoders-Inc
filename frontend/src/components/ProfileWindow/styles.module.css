@@ -1,0 +1,32 @@
+.mainWindow {
+  display: grid;
+  grid-template-rows: 20% 80%;
+  grid-template-areas: "profile" "content";
+}
+
+.userContent {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas: "chats settings";
+}
+
+.userProfile {
+  grid-area: profile;
+  display: flex;
+  flex-direction: row;
+}
+
+.chatList {
+  grid-area: chats;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.settings {
+  grid-area: settings;
+  display: flex;
+  align-items: center;
+}
