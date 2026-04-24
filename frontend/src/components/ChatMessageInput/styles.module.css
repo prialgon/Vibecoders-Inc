@@ -1,0 +1,22 @@
+.inputContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.input {
+  width: 100%;
+  height: fit-content;
+  overflow-y: hidden;
+  resize: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 2rem;
+  padding: 0.5rem;
+  max-height: 20rem;
+}
+
+.button {
+  width: fit-content;
+  padding: 1rem;
+}

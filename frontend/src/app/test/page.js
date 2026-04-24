@@ -2,6 +2,7 @@
 import styles from "./page.module.css";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
 import ChatMessage from "@/components/ChatMessage/ChatMessage";
+import ChatMessageInput from "@/components/ChatMessageInput/ChatMessageInput";
 
 export default function Test() {
   return (
@@ -33,6 +34,7 @@ export default function Test() {
         <ChatMessage message={"Hello, World!"} user={false} />{" "}
         <ChatMessage message={"Hello, World!"} user={true} />
         <ChatMessage message={"Hello, World!"} user={false} />
+        <ChatMessageInput />
       </ChatWindow>
     </>
   );
