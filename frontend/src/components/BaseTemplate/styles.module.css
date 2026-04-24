@@ -1,15 +1,16 @@
 .layout {
   display: grid;
   height: 100%;
-  grid-template-rows: 5% 85% 10%;
+  grid-area: footer;
+  grid-template-rows: 5% 88% 7%;
   grid-template-columns: 100%;
   grid-template-areas: "header" "content" "footer";
 }
 
 .content {
   grid-area: content;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   display: flex;
   color: black;

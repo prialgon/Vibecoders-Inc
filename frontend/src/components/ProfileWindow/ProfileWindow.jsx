@@ -8,9 +8,7 @@ const ProfileWindow = () => {
       <div className={styles.userProfile}>
         <div className={styles.userInfo}>
           <img src="/imgs/clippy.webp" className={styles.userIcon} />
-          <p>
-            <strong>Alberto Prieto</strong>
-          </p>
+          <h2>Alberto Prieto</h2>
         </div>
         <div>
           <p>Credits used: 75%</p>
