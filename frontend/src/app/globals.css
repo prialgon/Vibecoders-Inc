@@ -23,6 +23,8 @@ body {
 
 html {
   font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
+  scrollbar-color: blue darkblue;
+  scrollbar-width: thin;
 }
 
 body {

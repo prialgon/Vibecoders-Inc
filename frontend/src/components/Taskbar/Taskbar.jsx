@@ -4,16 +4,24 @@ import styles from "./styles.module.css";
 const Taskbar = ({ children }) => {
   return (
     <div className={styles.taskbar}>
-      <button className={styles.startButton}>Start</button>
-      <Tab title="How to migrate to Linux" />
+      <button className={styles.startButton}></button>
+      <div className={styles.tabs}>
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
+        <Tab title="How to migrate to Linux" />
 
-      <Tab title="How to migrate to Linux" />
-
-      <Tab title="How to migrate to Linux" />
-      <Tab title="How to migrate to Linux" />
-      <Tab title="How to migrate to Linux" />
-      <Tab title="How to migrate to Linux" />
-      {children}
+        {children}
+      </div>
     </div>
   );
 };
