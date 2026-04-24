@@ -1,0 +1,9 @@
+.chatList {
+  grid-area: chats;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: #a6a6a6;
+  padding: 1rem;
+}

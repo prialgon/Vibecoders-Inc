@@ -1,0 +1,10 @@
+.settings {
+  grid-area: settings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #a6a6a6;
+  border-left: 3px solid black;
+  padding: 1rem;
+}

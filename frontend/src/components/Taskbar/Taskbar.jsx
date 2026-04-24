@@ -11,14 +11,6 @@ const Taskbar = ({ children }) => {
         <Tab title="How to migrate to Linux" />
         <Tab title="How to migrate to Linux" />
         <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
 
         {children}
       </div>

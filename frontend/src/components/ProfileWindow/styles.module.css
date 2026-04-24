@@ -1,7 +1,10 @@
 .mainWindow {
   display: grid;
-  grid-template-rows: 20% 80%;
-  grid-template-areas: "profile" "content";
+  grid-template-rows: 20% 70% 10%;
+  grid-template-areas: "profile" "content" "footer";
+  width: 40%;
+  height: 90%;
+  border: 3px solid black;
 }
 
 .userContent {
@@ -15,18 +18,60 @@
   grid-area: profile;
   display: flex;
   flex-direction: row;
+  background-color: #2072da;
+  padding: 3rem 1rem 3rem 1rem;
+  border-bottom: 3px solid black;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.chatList {
-  grid-area: chats;
+.userInfo {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.settings {
-  grid-area: settings;
+.userIcon {
+  border: 5px solid #000;
+  width: 5rem;
+  background-color: white;
+  margin-right: 1rem;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #2072da;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
+  border-top: 3px solid black;
+  padding: 1rem;
+}
+
+.logOutButton {
+  background-color: #2072da;
+  color: white;
+  padding: 0.5rem;
+  border: 1px solid #2072da;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logOutButton:hover {
+  background-color: #1857a6;
+  border: 1px solid black;
+}
+
+.logOutButton:active {
+  background-color: #0c2e59;
+  border: 1px solid black;
+}
+
+.logOutIcon {
+  width: 2rem;
+  margin-right: 0.5rem;
 }
