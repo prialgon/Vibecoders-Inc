@@ -11,7 +11,7 @@ const ProfileWindow = () => {
           <h2>Alberto Prieto</h2>
         </div>
         <div>
-          <p>Credits used: 75%</p>
+          <p>Available Messages: 312</p>
         </div>
       </div>
       <div className={styles.userContent}>

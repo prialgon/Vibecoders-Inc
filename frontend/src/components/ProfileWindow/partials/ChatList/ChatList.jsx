@@ -23,19 +23,21 @@ const ChatList = () => {
         ))}
       </div>
       <div className={styles.buttons}>
-        <button
+        <input
+          type="image"
+          src="/imgs/left_arrow.png"
           onClick={() => setNumPage(numPage - 1)}
           disabled={numPage === 1}
-        >
-          Prev
-        </button>
+          className={styles.prevNextButton}
+        />
         <p>{numPage}</p>
-        <button
+        <input
+          type="image"
+          src="/imgs/right_arrow.png"
           onClick={() => setNumPage(numPage + 1)}
           disabled={numPage === Math.floor(entries.length / 5) + 1}
-        >
-          Next
-        </button>
+          className={styles.prevNextButton}
+        />
       </div>
     </div>
   );

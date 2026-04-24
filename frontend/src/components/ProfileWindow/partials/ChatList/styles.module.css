@@ -57,3 +57,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.prevNextButton {
+  width: 10%;
+}

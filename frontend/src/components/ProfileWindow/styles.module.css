@@ -23,6 +23,7 @@
   border-bottom: 3px solid black;
   align-items: center;
   justify-content: space-between;
+  color: white;
 }
 
 .userInfo {
