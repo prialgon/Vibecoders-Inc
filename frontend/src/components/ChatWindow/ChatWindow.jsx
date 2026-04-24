@@ -1,11 +1,21 @@
 import React from "react";
 import styles from "./styles.module.css";
+import { useRef, useEffect } from "react";
 
 const ChatWindow = ({ title, children }) => {
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [children]);
+
   return (
     <div className={styles.window}>
       <ChatWindowHeader title={title} />
-      <div className={styles.content}>{children}</div>
+      <div className={styles.content}>
+        {children}
+        <div ref={bottomRef} />
+      </div>
     </div>
   );
 };
