@@ -9,18 +9,20 @@ export const get = async (path, params) => {
   }
 
   const token = localStorage.getItem("access");
+  let headers;
+
   if (token != null) {
-    const headers = {
+    headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
   } else {
-    const headers = {
+    headers = {
       "Content-Type": "application/json",
     };
   }
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { headers: headers });
 
     if (response.ok) return await response.json();
 

@@ -1,9 +1,11 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
 import ChatList from "./partials/ChatList/ChatList";
 import Settings from "./partials/Settings/Settings";
 import { useRouter } from "next/navigation";
-
+import { get } from "@/utils/APIHandler.js";
+import { Suspense } from "react";
 const ProfileWindow = () => {
   const router = useRouter();
   const handleLogOut = () => {
@@ -11,12 +13,17 @@ const ProfileWindow = () => {
     localStorage.removeItem("refresh");
     router.push("/login");
   };
+
   return (
     <div className={styles.mainWindow}>
       <div className={styles.userProfile}>
         <div className={styles.userInfo}>
           <img src="/imgs/clippy.webp" className={styles.userIcon} />
-          <h2>Alberto Prieto</h2>
+          <h2>
+            <Suspense fallback="Loading...">
+              {get("/api/users/profile", null).then((res) => res["username"])}
+            </Suspense>{" "}
+          </h2>
         </div>
         <div>
           <p>Available Messages: 312</p>

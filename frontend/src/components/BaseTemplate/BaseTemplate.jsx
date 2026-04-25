@@ -9,7 +9,7 @@ import {
   ProfileProvider,
   ProfileWindowContext,
 } from "@/context/ProfileWindowContext";
-
+import { AuthProvider } from "@/context/AuthContext";
 const BaseTemplate = ({ children }) => {
   return (
     <ProfileProvider>

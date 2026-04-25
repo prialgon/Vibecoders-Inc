@@ -1,33 +1,42 @@
 "use client";
 import React from "react";
+import { Suspense } from "react";
 import styles from "./styles.module.css";
-import { useState } from "react";
+import { use, useState, useMemo, useEffect, useContext } from "react";
+import { get } from "@/utils/APIHandler";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
+  const [chats, setChats] = useState([]);
+  const [isNext, setIsNext] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const entries = [
-    "Welcome to VibeGPT, Alberto",
-    "How to add Clippy to Windows",
-    "Definition of React Hooks",
-    "Hallo Welt, Die Kiwi",
-    "Iran War news",
-    "VibeGPT is the best AI service",
-  ];
+  useEffect(() => {
+    setLoading(true);
+    get(`api/chats/`, { page: numPage })
+      .then((res) => {
+        setChats(res.results);
+        setIsNext(!!res.next);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, [numPage]);
+
   return (
     <div className={styles.sectionLayout}>
       <div className={styles.chatList}>
         <h3 className={styles.chatTitle}>Chats</h3>
-        {entries.slice((numPage - 1) * 5, numPage * 5).map((entry) => (
-          <ChatEntry key={entry} title={entry} />
-        ))}
+        {loading
+          ? "Loading chats..."
+          : chats.map((entry) => (
+              <ChatEntry key={entry["title"]} title={entry["title"]} />
+            ))}
       </div>
       <div className={styles.buttons}>
         <input
           type="image"
           src="/imgs/left_arrow.png"
           onClick={() => setNumPage(numPage - 1)}
-          disabled={numPage === 1}
           className={styles.prevNextButton}
         />
         <p>{numPage}</p>
@@ -35,8 +44,8 @@ const ChatList = () => {
           type="image"
           src="/imgs/right_arrow.png"
           onClick={() => setNumPage(numPage + 1)}
-          disabled={numPage === Math.floor(entries.length / 5) + 1}
           className={styles.prevNextButton}
+          disabled={!isNext | loading}
         />
       </div>
     </div>
