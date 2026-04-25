@@ -38,6 +38,7 @@ const ChatList = () => {
           src="/imgs/left_arrow.png"
           onClick={() => setNumPage(numPage - 1)}
           className={styles.prevNextButton}
+          disabled={numPage === 1}
         />
         <p>{numPage}</p>
         <input
