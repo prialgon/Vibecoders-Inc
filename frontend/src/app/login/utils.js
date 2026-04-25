@@ -1,4 +1,6 @@
-const loginUrl = "http://localhost:8000/api/auth/login/";
+import { redirect } from "next/navigation";
+import { post } from "@/utils/APIHandler.js";
+const loginPath = "api/auth/login/";
 
 const handleError = (response) => {
   let allErrors = "";
@@ -18,28 +20,25 @@ export const doLogin = async (event) => {
     username: data.get("username"),
     password: data.get("password"),
   };
-
+  let success = false;
   try {
-    const response = await fetch(loginUrl, {
-      method: "POST",
-      body: JSON.stringify(loginPayload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const responseData = await post(loginPath, loginPayload);
 
-    const responseData = await response.json().catch(() => null);
-
-    if (!response.ok) {
+    if (responseData == null) {
       document.getElementById("loginError").textContent =
-        handleError(responseData);
+        "An error has occurred";
       return;
     }
 
     localStorage.setItem("access", responseData?.access ?? "");
     localStorage.setItem("refresh", responseData?.refresh ?? "");
-  } catch {
+    success = true;
+  } catch (error) {
     document.getElementById("loginError").textContent =
       "Username or password incorrect";
+    console.error(error);
+  }
+  if (success) {
+    redirect("/home");
   }
 };

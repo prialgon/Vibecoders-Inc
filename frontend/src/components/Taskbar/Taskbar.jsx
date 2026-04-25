@@ -1,19 +1,19 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
-
+import { useContext } from "react";
+import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 const Taskbar = ({ children }) => {
+  const { profileActive, setProfileActive } = useContext(ProfileWindowContext);
   return (
     <div className={styles.taskbar}>
-      <button className={styles.startButton}></button>
+      <button
+        className={styles.startButton}
+        onClick={() => {
+          setProfileActive(!profileActive);
+        }}
+      ></button>
       <div className={styles.tabs}>
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
-        <Tab title="How to migrate to Linux" />
         <Tab title="How to migrate to Linux" />
         <Tab title="How to migrate to Linux" />
         <Tab title="How to migrate to Linux" />

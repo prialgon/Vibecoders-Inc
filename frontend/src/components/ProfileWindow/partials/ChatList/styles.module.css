@@ -1,0 +1,90 @@
+.sectionLayout {
+  grid-area: chats;
+  display: grid;
+  grid-template-rows: 90% 10%;
+  grid-template-columns: 100%;
+  grid-template-areas: "chatlist" "buttons";
+  background-color: white;
+}
+
+.chatList {
+  grid-area: chatlist;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem 0rem 1rem 0rem;
+}
+
+.buttons {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.chatEntry {
+  background-color: white;
+  padding: 0.8rem;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-sizing: border-box;
+}
+.chatEntry:hover {
+  background-color: #f2f2f2;
+}
+.chatEntry:active {
+  background-color: #cccccc;
+}
+
+.chatTitle {
+}
+
+.entryIcon {
+  width: 3rem;
+}
+
+.entryTitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
+
+.prevNextButton {
+  width: 10%;
+}
+
+.deleteIcon {
+  width: 2rem;
+}
+.deleteButton {
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.deleteButton:hover {
+  background-color: #f2f2f2;
+}
+
+.deleteButton:active {
+  background-color: #cccccc;
+}
+
+.entryAndButton {
+  display: grid;
+  grid-template-columns: 85% 15%;
+  width: 100%;
+}

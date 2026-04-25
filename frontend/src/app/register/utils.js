@@ -1,9 +1,11 @@
-const registerUrl = "http://localhost:8000/api/auth/register/";
+import { redirect } from "next/navigation";
+import { post } from "@/utils/APIHandler.js";
+const registerPath = "api/users/register/";
 
 const handleError = (response) => {
   let allErrors = "";
   for (let component in response) {
-    allErrors += response[component][component] + "<br>";
+    allErrors += response[component][component];
   }
   return allErrors;
 };
@@ -29,23 +31,21 @@ export const doRegister = async (event) => {
       "Passwords do not match";
     return;
   }
+  let success = false;
   try {
-    const response = await fetch(registerUrl, {
-      method: "POST",
-      body: JSON.stringify(registerPayload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const responseData = await response.json().catch(() => null);
-
-    if (!response.ok) {
+    const responseData = await post(registerPath, registerPayload);
+    if (responseData == null) {
       document.getElementById("registerError").textContent =
-        handleError(responseData);
+        "An error has occurred.";
+      return;
     }
+    success = true;
   } catch (error) {
     document.getElementById("registerError").textContent =
       "Something went wrong";
+  }
+
+  if (success) {
+    redirect("/login");
   }
 };

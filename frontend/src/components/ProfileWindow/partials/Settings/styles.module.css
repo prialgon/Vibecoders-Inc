@@ -1,0 +1,35 @@
+.settings {
+  grid-area: settings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f2f2f2;
+  border-left: 3px solid black;
+  padding: 1rem;
+}
+
+.settingsEntry {
+  background-color: #f2f2f2;
+  padding: 0.8rem;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+.settingsEntry:hover {
+  background-color: #f2f2f2;
+}
+.settingsEntry:active {
+  background-color: #cccccc;
+}
+
+.entryIcon {
+  width: 2.5rem;
+  margin-right: 1rem;
+}
