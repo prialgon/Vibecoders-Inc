@@ -3,13 +3,14 @@ import React from "react";
 import { Suspense } from "react";
 import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext } from "react";
-import { get } from "@/utils/APIHandler";
+import { get, del } from "@/utils/APIHandler";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
   const [chats, setChats] = useState([]);
   const [isNext, setIsNext] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [numDeleted, setNumDeleted] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -20,7 +21,7 @@ const ChatList = () => {
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [numPage]);
+  }, [numPage, numDeleted]);
 
   return (
     <div className={styles.sectionLayout}>
@@ -29,7 +30,13 @@ const ChatList = () => {
         {loading
           ? "Loading chats..."
           : chats.map((entry) => (
-              <ChatEntry key={entry["title"]} title={entry["title"]} />
+              <ChatEntry
+                key={entry["title"]}
+                title={entry["title"]}
+                id={entry["id"]}
+                setNumDeleted={setNumDeleted}
+                numDeleted={numDeleted}
+              />
             ))}
       </div>
       <div className={styles.buttons}>
@@ -55,11 +62,20 @@ const ChatList = () => {
 
 export default ChatList;
 
-const ChatEntry = ({ title }) => {
+const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
+  const handleDelete = async () => {
+    del(`api/chats/${id}/`);
+    setNumDeleted(numDeleted + 1);
+  };
   return (
-    <button className={styles.chatEntry}>
-      <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
-      <p className={styles.entryTitle}>{title}</p>
-    </button>
+    <div className={styles.entryAndButton}>
+      <button className={styles.chatEntry}>
+        <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
+        <p className={styles.entryTitle}>{title}</p>
+      </button>
+      <button className={styles.deleteButton} onClick={handleDelete}>
+        <img src="/imgs/Delete.png" className={styles.deleteIcon} />
+      </button>
+    </div>
   );
 };
