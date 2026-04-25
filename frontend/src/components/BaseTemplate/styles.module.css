@@ -10,8 +10,9 @@
 .content {
   grid-area: content;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   display: flex;
   color: black;
+  position: relative;
 }
