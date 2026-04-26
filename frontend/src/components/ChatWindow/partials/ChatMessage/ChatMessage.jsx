@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-const ChatMessage = ({ message, user }) => {
+const ChatMessage = ({ user, message }) => {
   return (
     <div
       className={`${styles.messageRow} ${user ? styles.rightMessageContainer : styles.leftMessageContainer}`}
