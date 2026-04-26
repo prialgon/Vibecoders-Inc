@@ -58,7 +58,8 @@ export const post = async (path, data) => {
     if (response.ok) {
       return await response.json();
     }
-    throw new Error("Error in POST request. Code: " + request.status);
+
+    throw new Error("Error in POST request. Code: " + response.status);
   } catch (error) {
     console.error(error);
     return null;
@@ -89,7 +90,7 @@ export const del = async (path) => {
     if (response.ok) {
       return;
     }
-    throw new Error("Error in POST request. Code: " + request.status);
+    throw new Error("Error in POST request. Code: " + response.status);
   } catch (error) {
     console.error(error);
     return null;

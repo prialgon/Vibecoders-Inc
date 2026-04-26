@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { useRef, useEffect } from "react";
-import { get } from "@/utils/APIHandler";
+import { get, post } from "@/utils/APIHandler";
 import ChatMessage from "./partials/ChatMessage/ChatMessage";
 import ChatMessageInput from "./partials/ChatMessageInput/ChatMessageInput";
 
@@ -22,6 +22,21 @@ const ChatWindow = ({ id, title }) => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handleSendMessage = async (text) => {
+    const msg = {
+      role: "user",
+      content: text,
+    };
+
+    setMessages((prev) => [...prev, msg]);
+
+    const response = await post(`api/chats/${id}/`, msg);
+
+    if (!response) return;
+
+    setMessages((prev) => [...prev, response]);
+  };
+
   return (
     <div className={styles.window}>
       <ChatWindowHeader title={title} />
@@ -37,7 +52,7 @@ const ChatWindow = ({ id, title }) => {
           <div ref={bottomRef} />
         </div>
         <div className={styles.inputArea}>
-          <ChatMessageInput />
+          <ChatMessageInput handleSendMessage={handleSendMessage} />
         </div>
       </div>
     </div>

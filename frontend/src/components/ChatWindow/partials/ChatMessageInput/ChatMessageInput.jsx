@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { useRef } from "react";
 
-const ChatMessageInput = () => {
+const ChatMessageInput = ({ handleSendMessage }) => {
   const ref = useRef(null);
   const maxHeight = 200;
 
@@ -15,16 +15,47 @@ const ChatMessageInput = () => {
     element.style.overflowY = newHeight > maxHeight ? "auto" : "hidden";
   };
 
+  const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const text = input.trim();
+
+    if (!text || sending) return;
+
+    setSending(true);
+
+    setInput("");
+
+    try {
+      await handleSendMessage(text);
+    } catch {
+      setInput(text);
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
-    <div className={styles.inputContainer}>
+    <form onSubmit={handleSubmit} className={styles.inputContainer}>
       <textarea
         className={styles.input}
         placeholder="Message VibeGPT"
+        value={input}
         ref={ref}
+        onChange={(e) => setInput(e.target.value)}
         onInput={handleInput}
       />
-      <button className={styles.button}>Send</button>
-    </div>
+      <button
+        className={styles.button}
+        type="submit"
+        disabled={sending || !input.trim()}
+      >
+        {sending ? "Sending..." : "Send"}
+      </button>
+    </form>
   );
 };
 
