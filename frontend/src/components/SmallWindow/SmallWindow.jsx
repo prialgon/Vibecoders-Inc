@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
-
+import { useRouter } from "next/navigation";
 const SmallWindow = ({ title, children }) => {
   return (
     <div className={styles.window}>
@@ -11,10 +12,17 @@ const SmallWindow = ({ title, children }) => {
 };
 
 const SmallWindowHeader = ({ title }) => {
+  const router = useRouter();
+
   return (
     <div className={styles.windowHeader}>
       <p className={styles.windowHeaderText}>{title}</p>
-      <img src="/imgs/close.png" className={styles.close} />
+      <input
+        type="image"
+        src="/imgs/close.png"
+        className={styles.close}
+        onClick={() => router.push("/home")}
+      />
     </div>
   );
 };

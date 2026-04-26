@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./styles.module.css";
+import { useRouter } from "next/navigation";
 
 const Settings = () => {
+  const router = useRouter();
   return (
     <div className={styles.settings}>
       <button className={styles.settingsEntry}>
@@ -25,7 +27,10 @@ const Settings = () => {
         <img src="/imgs/admin_panel.png" className={styles.entryIcon} />
         Admin Panel
       </button>
-      <button className={styles.settingsEntry}>
+      <button
+        className={styles.settingsEntry}
+        onClick={() => router.push("/settings")}
+      >
         <img src="/imgs/users.png" className={styles.entryIcon} />
         User Settings
       </button>

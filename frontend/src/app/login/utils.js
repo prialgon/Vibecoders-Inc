@@ -5,7 +5,7 @@ const loginPath = "api/auth/login/";
 const handleError = (response) => {
   let allErrors = "";
   for (let component in response) {
-    allErrors += response[component][component] + "<br>";
+    allErrors += response[component] + "\n";
   }
   return allErrors;
 };
@@ -22,17 +22,18 @@ export const doLogin = async (event) => {
   };
   let success = false;
   try {
-    const responseData = await post(loginPath, loginPayload);
+    const response = await post(loginPath, loginPayload, false);
 
-    if (responseData == null) {
+    const responseData = await response.json();
+
+    if (!response.ok)
       document.getElementById("loginError").textContent =
-        "An error has occurred";
-      return;
+        handleError(responseData);
+    else {
+      localStorage.setItem("access", responseData?.access ?? "");
+      localStorage.setItem("refresh", responseData?.refresh ?? "");
+      success = true;
     }
-
-    localStorage.setItem("access", responseData?.access ?? "");
-    localStorage.setItem("refresh", responseData?.refresh ?? "");
-    success = true;
   } catch (error) {
     document.getElementById("loginError").textContent =
       "Username or password incorrect";

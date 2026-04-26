@@ -4,10 +4,27 @@ const registerPath = "api/users/register/";
 
 const handleError = (response) => {
   let allErrors = "";
+  console.log(Object.values(response));
   for (let component in response) {
-    allErrors += response[component][component];
+    if (Array.isArray(component)) allErrors += response.component[0] + "\n";
+    else allErrors += response[component][component] + "\n";
   }
   return allErrors;
+};
+
+const findErrorsString = (errors) => {
+  switch (errors.constructor) {
+    case String:
+      return errors;
+    case Object:
+      let objChildError = Object.keys(errors).map((key) => errors[key]);
+      return objChildError.map(findErrorsString);
+    case Array:
+      return errors.map(findErrorsString);
+
+    default:
+      return "";
+  }
 };
 
 export const doRegister = async (event) => {
@@ -33,16 +50,20 @@ export const doRegister = async (event) => {
   }
   let success = false;
   try {
-    const responseData = await post(registerPath, registerPayload);
-    if (responseData == null) {
-      document.getElementById("registerError").textContent =
-        "An error has occurred.";
+    const response = await post(registerPath, registerPayload, false);
+    const responseData = await response.json();
+    console.log(responseData);
+
+    if (!response.ok) {
+      document.getElementById("registerError").innerHTML =
+        findErrorsString(responseData).join("\r\n<br />");
       return;
     }
     success = true;
   } catch (error) {
     document.getElementById("registerError").textContent =
       "Something went wrong";
+    console.error(error);
   }
 
   if (success) {

@@ -16,6 +16,9 @@ export default function Home() {
     if (!token) {
       router.replace("/login");
     }
-  }, [router]);
+    return () => {
+      setProfileActive(false);
+    };
+  }, [router, setProfileActive]);
   return <>{profileActive ? <ProfileWindow /> : null}</>;
 }
