@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import styles from "./styles.module.css";
 import ChatList from "./partials/ChatList/ChatList";
@@ -25,8 +24,23 @@ const ProfileWindow = () => {
             </Suspense>{" "}
           </h2>
         </div>
-        <div>
-          <p>Available Messages: 312</p>
+        <div className={styles.rightText}>
+          <Suspense fallback="...">
+            {get("/api/usage/", null)
+              .then((res) => res.results)
+              .then((result) => {
+                const fecha = new Date(result[0].reset_date);
+                return (
+                  <>
+                    <p>
+                      Available Messages:{" "}
+                      {result[0].messages_limit - result[0].messages_used}
+                    </p>
+                    <p>Reset date: {fecha.toLocaleString()}</p>
+                  </>
+                );
+              })}
+          </Suspense>
         </div>
       </div>
       <div className={styles.userContent}>
