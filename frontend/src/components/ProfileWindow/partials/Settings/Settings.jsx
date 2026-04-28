@@ -7,18 +7,18 @@ const Settings = () => {
   const router = useRouter();
 
   const handleCreateChat = async () => {
-    const response = post("api/chats");
+    const response = await post("api/chats/", { title: "hello" });
     router.push(`/chats/${response.id}`);
   };
 
   return (
     <div className={styles.settings}>
-      <button className={styles.settingsEntry}>
-        <img
-          src="/imgs/Add.png"
-          onClick={handleCreateChat}
-          className={styles.entryIcon}
-        />
+      <button
+        className={styles.settingsEntry}
+        onClick={handleCreateChat}
+        type="button"
+      >
+        <img src="/imgs/Add.png" className={styles.entryIcon} />
         New Chat
       </button>
       <button className={styles.settingsEntry}>

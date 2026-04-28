@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext } from "react";
 import { get, del } from "@/utils/APIHandler";
+import { useRouter } from "next/navigation";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
@@ -31,7 +32,7 @@ const ChatList = () => {
           ? "Loading chats..."
           : chats.map((entry) => (
               <ChatEntry
-                key={entry["title"]}
+                key={entry["id"]}
                 title={entry["title"]}
                 id={entry["id"]}
                 setNumDeleted={setNumDeleted}
@@ -63,13 +64,18 @@ const ChatList = () => {
 export default ChatList;
 
 const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
+  const router = useRouter();
   const handleDelete = async () => {
     del(`api/chats/${id}/`);
     setNumDeleted(numDeleted + 1);
   };
+
   return (
     <div className={styles.entryAndButton}>
-      <button className={styles.chatEntry}>
+      <button
+        className={styles.chatEntry}
+        onClick={() => router.push(`/chats/${id}`)}
+      >
         <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
         <p className={styles.entryTitle}>{title}</p>
       </button>

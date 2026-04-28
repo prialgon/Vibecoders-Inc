@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import { get, post } from "@/utils/APIHandler";
 import ChatMessage from "./partials/ChatMessage/ChatMessage";
 import ChatMessageInput from "./partials/ChatMessageInput/ChatMessageInput";
+import { useRouter } from "next/navigation";
 
 const ChatWindow = ({ id, title }) => {
   const bottomRef = useRef(null);
@@ -60,10 +61,16 @@ const ChatWindow = ({ id, title }) => {
 };
 
 const ChatWindowHeader = ({ title }) => {
+  const router = useRouter();
   return (
     <div className={styles.windowHeader}>
       <p className={styles.windowHeaderText}>{title}</p>
-      <img src="/imgs/close.png" className={styles.close} />
+      <input
+        type="image"
+        src="/imgs/close.png"
+        className={styles.close}
+        onClick={() => router.push("/home")}
+      />
     </div>
   );
 };
