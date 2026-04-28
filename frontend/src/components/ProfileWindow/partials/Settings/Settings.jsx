@@ -1,13 +1,24 @@
-import React from "react";
+"use client";
 import styles from "./styles.module.css";
+import { post } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
 
 const Settings = () => {
   const router = useRouter();
+
+  const handleCreateChat = async () => {
+    const response = post("api/chats");
+    router.push(`/chats/${response.id}`);
+  };
+
   return (
     <div className={styles.settings}>
       <button className={styles.settingsEntry}>
-        <img src="/imgs/Add.png" className={styles.entryIcon} />
+        <img
+          src="/imgs/Add.png"
+          onClick={handleCreateChat}
+          className={styles.entryIcon}
+        />
         New Chat
       </button>
       <button className={styles.settingsEntry}>
