@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext } from "react";
 import { get, del } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
+import { TaskbarContext } from "@/context/TaskbarContext";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
@@ -65,17 +66,23 @@ export default ChatList;
 
 const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
   const router = useRouter();
+  const { openChats, setOpenChats } = useContext(TaskbarContext);
   const handleDelete = async () => {
     del(`api/chats/${id}/`);
     setNumDeleted(numDeleted + 1);
+    setOpenChats(openChats.filter((c) => c.id !== id));
+  };
+
+  const handleOpen = () => {
+    if (!openChats.some((chat) => chat.id === id)) {
+      setOpenChats([...openChats, { id: id, title: title }]);
+    }
+    router.push(`/chats/${id}`);
   };
 
   return (
     <div className={styles.entryAndButton}>
-      <button
-        className={styles.chatEntry}
-        onClick={() => router.push(`/chats/${id}`)}
-      >
+      <button className={styles.chatEntry} onClick={handleOpen}>
         <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
         <p className={styles.entryTitle}>{title}</p>
       </button>

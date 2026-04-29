@@ -5,11 +5,15 @@ import Settings from "./partials/Settings/Settings";
 import { useRouter } from "next/navigation";
 import { get } from "@/utils/APIHandler.js";
 import { Suspense } from "react";
+import { TaskbarContext } from "@/context/TaskbarContext";
+import { useContext } from "react";
 const ProfileWindow = () => {
   const router = useRouter();
+  const { setOpenChats } = useContext(TaskbarContext);
   const handleLogOut = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    setOpenChats([]);
     router.push("/login");
   };
 

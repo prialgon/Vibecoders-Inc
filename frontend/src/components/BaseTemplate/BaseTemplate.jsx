@@ -10,15 +10,21 @@ import {
   ProfileWindowContext,
 } from "@/context/ProfileWindowContext";
 import { AuthProvider } from "@/context/AuthContext";
+import {
+  TaskbarContext,
+  TaskbarContextProvider,
+} from "@/context/TaskbarContext";
 const BaseTemplate = ({ children }) => {
   return (
     <ProfileProvider>
-      {" "}
-      <div className={styles.layout}>
-        <Header />
-        <div className={styles.content}>{children}</div>
-        <Taskbar />
-      </div>
+      <TaskbarContextProvider>
+        {" "}
+        <div className={styles.layout}>
+          <Header />
+          <div className={styles.content}>{children}</div>
+          <Taskbar />
+        </div>
+      </TaskbarContextProvider>
     </ProfileProvider>
   );
 };
