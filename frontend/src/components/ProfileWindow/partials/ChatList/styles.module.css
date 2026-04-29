@@ -62,6 +62,16 @@
   min-width: 0;
 }
 
+.renameInput {
+  width: 20rem;
+  height: 2.75rem;
+  padding: 0 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  border-width: 0.1rem;
+  box-shadow: 0 -0.03rem black;
+}
+
 .prevNextButton {
   width: 10%;
 }
@@ -85,6 +95,39 @@
 
 .entryAndButton {
   display: grid;
-  grid-template-columns: 85% 15%;
+  grid-template-columns: 70% 15% 15%;
   width: 100%;
+}
+
+.renameIcon {
+  width: 2rem;
+}
+
+.renameButton {
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.renameButton:hover {
+  background-color: #f2f2f2;
+}
+
+.renameButton:active {
+  background-color: #cccccc;
+}
+
+.renameActiveButton {
+  background-color: white;
+  padding: 0.8rem;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-sizing: border-box;
 }

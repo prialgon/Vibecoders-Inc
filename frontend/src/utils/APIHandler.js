@@ -100,6 +100,39 @@ export const put = async (path, data, returnJSON = true) => {
   }
 };
 
+export const patch = async (path, data, returnJSON = true) => {
+  let url = `${API_BASE_URL}${path}`;
+  const token = localStorage.getItem("access");
+  let headers;
+  if (token != null) {
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok && returnJSON) return await response.json();
+    else if (!returnJSON) return response;
+    else console.error("An error occurred");
+
+    throw new Error("Error in POST request. Code: " + response.status);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const del = async (path) => {
   let url = `${API_BASE_URL}${path}`;
   const token = localStorage.getItem("access");

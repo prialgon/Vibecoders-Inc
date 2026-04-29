@@ -82,7 +82,7 @@ class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, *args, **kwargs):
         chat = self.get_object()
-        serializer = self.get_serializer(chat, request.data, partial=True)
+        serializer = ChatPatchSerializer(chat, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        chat.save()
+        serializer.save()
         return Response(serializer.data, status=201)

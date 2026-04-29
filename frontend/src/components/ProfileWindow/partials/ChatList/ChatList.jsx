@@ -2,8 +2,8 @@
 import React from "react";
 import { Suspense } from "react";
 import styles from "./styles.module.css";
-import { use, useState, useMemo, useEffect, useContext } from "react";
-import { get, del } from "@/utils/APIHandler";
+import { use, useState, useMemo, useEffect, useContext, useRef } from "react";
+import { get, del, patch } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
 
 const ChatList = () => {
@@ -12,6 +12,7 @@ const ChatList = () => {
   const [isNext, setIsNext] = useState(true);
   const [loading, setLoading] = useState(true);
   const [numDeleted, setNumDeleted] = useState(0);
+  const [rename, setRename] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +23,7 @@ const ChatList = () => {
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [numPage, numDeleted]);
+  }, [numPage, numDeleted, rename]);
 
   return (
     <div className={styles.sectionLayout}>
@@ -37,6 +38,8 @@ const ChatList = () => {
                 id={entry["id"]}
                 setNumDeleted={setNumDeleted}
                 numDeleted={numDeleted}
+                rename={rename === entry["id"]}
+                setRename={setRename}
               />
             ))}
       </div>
@@ -63,25 +66,80 @@ const ChatList = () => {
 
 export default ChatList;
 
-const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
+const ChatEntry = ({
+  title,
+  id,
+  numDeleted,
+  setNumDeleted,
+  rename,
+  setRename,
+}) => {
   const router = useRouter();
+  const inputRef = useRef(null);
+
   const handleDelete = async () => {
-    del(`api/chats/${id}/`);
+    del(`/api/chats/${id}/`);
     setNumDeleted(numDeleted + 1);
   };
 
-  return (
-    <div className={styles.entryAndButton}>
-      <button
-        className={styles.chatEntry}
-        onClick={() => router.push(`/chats/${id}`)}
-      >
-        <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
-        <p className={styles.entryTitle}>{title}</p>
-      </button>
-      <button className={styles.deleteButton} onClick={handleDelete}>
-        <img src="/imgs/Delete.png" className={styles.deleteIcon} />
-      </button>
-    </div>
-  );
+  const handleRename = async (newTitle) => {
+    await patch(`/api/chats/${id}/`, { title: newTitle });
+    setRename(null);
+  };
+
+  const divLoader = () => {
+    if (!rename) {
+      return (
+        <>
+          <button
+            className={styles.chatEntry}
+            onClick={() => router.push(`/chats/${id}`)}
+          >
+            <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
+            <p className={styles.entryTitle}>{title}</p>
+          </button>
+          <button className={styles.renameButton} onClick={() => setRename(id)}>
+            <img src="/imgs/Rename.png" className={styles.renameIcon} />
+          </button>
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            <img src="/imgs/Delete.png" className={styles.deleteIcon} />
+          </button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className={styles.renameActiveButton}>
+            <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
+            <input
+              className={styles.renameInput}
+              defaultValue={title}
+              ref={inputRef}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleRename(inputRef.current.value);
+                }
+              }}
+            ></input>
+          </div>
+          <button
+            className={styles.renameButton}
+            onClick={() =>
+              inputRef.current && handleRename(inputRef.current.value)
+            }
+          >
+            <img src="/imgs/Save.png" className={styles.renameIcon} />
+          </button>
+          <button
+            className={styles.deleteButton}
+            onClick={() => setRename(null)}
+          >
+            <img src="/imgs/Undo.png" className={styles.deleteIcon} />
+          </button>
+        </>
+      );
+    }
+  };
+
+  return <div className={styles.entryAndButton}>{divLoader()}</div>;
 };
