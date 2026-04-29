@@ -14,18 +14,21 @@ import {
   TaskbarContext,
   TaskbarContextProvider,
 } from "@/context/TaskbarContext";
+import { DarthVaderContextProvider } from "@/context/DarthVaderContext";
 const BaseTemplate = ({ children }) => {
   return (
-    <ProfileProvider>
-      <TaskbarContextProvider>
-        {" "}
-        <div className={styles.layout}>
-          <Header />
-          <div className={styles.content}>{children}</div>
-          <Taskbar />
-        </div>
-      </TaskbarContextProvider>
-    </ProfileProvider>
+    <DarthVaderContextProvider>
+      <ProfileProvider>
+        <TaskbarContextProvider>
+          {" "}
+          <div className={styles.layout}>
+            <Header />
+            <div className={styles.content}>{children}</div>
+            <Taskbar />
+          </div>
+        </TaskbarContextProvider>
+      </ProfileProvider>
+    </DarthVaderContextProvider>
   );
 };
 
