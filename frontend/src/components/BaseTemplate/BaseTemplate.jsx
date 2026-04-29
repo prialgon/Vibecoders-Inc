@@ -15,20 +15,35 @@ import {
   TaskbarContextProvider,
 } from "@/context/TaskbarContext";
 import { DarthVaderContextProvider } from "@/context/DarthVaderContext";
+import ProfileWindow from "@/components/ProfileWindow/ProfileWindow";
+import { usePathname } from "next/navigation";
+
 const BaseTemplate = ({ children }) => {
   return (
     <DarthVaderContextProvider>
       <ProfileProvider>
         <TaskbarContextProvider>
-          {" "}
-          <div className={styles.layout}>
-            <Header />
-            <div className={styles.content}>{children}</div>
-            <Taskbar />
-          </div>
+          <BaseTemplateContent>{children}</BaseTemplateContent>
         </TaskbarContextProvider>
       </ProfileProvider>
     </DarthVaderContextProvider>
+  );
+};
+
+const BaseTemplateContent = ({ children }) => {
+  const { profileActive } = useContext(ProfileWindowContext);
+  const pathname = usePathname();
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+
+  return (
+    <div className={styles.layout}>
+      {!isAuthPage && <Header />}
+      <div className={styles.content}>
+        {children}
+        {!isAuthPage && profileActive ? <ProfileWindow /> : null}
+      </div>
+      {!isAuthPage && <Taskbar />}
+    </div>
   );
 };
 

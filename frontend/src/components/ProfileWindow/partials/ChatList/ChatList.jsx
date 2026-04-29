@@ -6,6 +6,7 @@ import { use, useState, useMemo, useEffect, useContext } from "react";
 import { get, del } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
 import { TaskbarContext } from "@/context/TaskbarContext";
+import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
@@ -67,6 +68,8 @@ export default ChatList;
 const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
   const router = useRouter();
   const { openChats, setOpenChats } = useContext(TaskbarContext);
+  const { setProfileActive } = useContext(ProfileWindowContext);
+  
   const handleDelete = async () => {
     del(`api/chats/${id}/`);
     setNumDeleted(numDeleted + 1);
@@ -77,6 +80,7 @@ const ChatEntry = ({ title, id, numDeleted, setNumDeleted }) => {
     if (!openChats.some((chat) => chat.id === id)) {
       setOpenChats([...openChats, { id: id, title: title }]);
     }
+    setProfileActive(false);
     router.push(`/chats/${id}`);
   };
 

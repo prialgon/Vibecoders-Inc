@@ -28,8 +28,12 @@ const Taskbar = ({ children }) => {
 
 const Tab = ({ title, id }) => {
   const router = useRouter();
+  const { setProfileActive } = useContext(ProfileWindowContext);
   return (
-    <button className={styles.tab} onClick={() => router.push(`/chats/${id}`)}>
+    <button className={styles.tab} onClick={() => {
+      setProfileActive(false);
+      router.push(`/chats/${id}`);
+    }}>
       <img src="/imgs/chat_icon.png" className={styles.tabIcon} />
       <p className={styles.tabTitle}>{title}</p>
     </button>
