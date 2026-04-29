@@ -32,3 +32,19 @@ class ChatMessageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMessage
         fields = ["role", "content"]
+
+
+class ChatPatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ["title"]
+
+    def validate_title(self, value):
+        if not value or not value.strip():
+            raise serializers.ValidationError("The title cannot be empty.")
+        if len(value) > 60:
+            raise serializers.ValidationError(
+                "The title is too long, max is 60 characters."
+            )
+
+        return value

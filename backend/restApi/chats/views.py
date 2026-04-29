@@ -14,6 +14,7 @@ from .serializers import (
     ChatListCreateSerializer,
     ChatMessageCreateSerializer,
     ChatMessageSerializer,
+    ChatPatchSerializer,
 )
 
 # Create your views here.
@@ -32,9 +33,10 @@ class ChatListView(generics.ListCreateAPIView):
         serializer.save(user_id=self.request.user)
 
 
-class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
+class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ChatDetailSerializer
+    http_method_names = ["get", "post", "patch", "delete"]
 
     def get_queryset(self):
         user_id = self.request.user
@@ -77,3 +79,10 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
         )
         serializer_llm = ChatMessageSerializer(msg)
         return Response(serializer_llm.data, status=201)
+
+    def patch(self, request, *args, **kwargs):
+        chat = self.get_object()
+        serializer = self.get_serializer(chat, request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        chat.save()
+        return Response(serializer.data, status=201)
