@@ -14,8 +14,8 @@
   scrollbar-width: thin;
   grid-area: tabs;
   background-color: darkblue;
-  min-height: 3.2rem;
 
+  min-height: 3.5rem;
   scrollbar-color: blue darkblue;
 }
 

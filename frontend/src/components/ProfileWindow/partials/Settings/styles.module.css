@@ -4,29 +4,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background-color: #f2f2f2;
+  background-color: var(--background);
   border-left: 3px solid black;
   padding: 1rem;
 }
 
 .settingsEntry {
-  background-color: #f2f2f2;
+  background-color: var(--background);
   padding: 0.8rem;
-  color: black;
+  color: var(--foreground);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  border-color: var(--foreground);
   border-left: none;
   border-right: none;
   border-top: none;
 }
 .settingsEntry:hover {
-  background-color: #f2f2f2;
+  background-color: var(--bg-2);
 }
 .settingsEntry:active {
-  background-color: #cccccc;
+  background-color: var(--bg-3);
 }
 
 .entryIcon {

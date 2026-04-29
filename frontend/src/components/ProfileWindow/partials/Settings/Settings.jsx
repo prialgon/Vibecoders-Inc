@@ -2,10 +2,12 @@
 import styles from "./styles.module.css";
 import { post } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
-
+import { DarthVaderContext } from "@/context/DarthVaderContext";
+import { useContext } from "react";
 const Settings = () => {
   const router = useRouter();
 
+  const { forceSide, changeSide } = useContext(DarthVaderContext);
   const handleCreateChat = async () => {
     const response = await post("api/chats/", { title: "hello" });
     router.push(`/chats/${response.id}`);
@@ -29,7 +31,7 @@ const Settings = () => {
         <img src="/imgs/Search.png" className={styles.entryIcon} />
         Search Chats
       </button>
-      <button className={styles.settingsEntry}>
+      <button className={styles.settingsEntry} onClick={changeSide}>
         <img src="/imgs/darkmode.png" className={styles.entryIcon} />
         Toggle Dark Mode
       </button>
