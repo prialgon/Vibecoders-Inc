@@ -7,8 +7,7 @@ export const DarthVaderContextProvider = ({ children }) => {
   const [forceSide, setForceSide] = useState("jedi");
 
   useEffect(() => {
-    const isAnakin = localStorage.getItem("isAnakin") || true;
-    const savedSide = isAnakin ? "jedi" : "sith";
+    const savedSide = localStorage.getItem("forceSide") || "jedi";
     setForceSide(savedSide);
     document.documentElement.dataset.theme = savedSide;
   }, []);
@@ -16,7 +15,7 @@ export const DarthVaderContextProvider = ({ children }) => {
   const changeSide = () => {
     const newSide = forceSide === "jedi" ? "sith" : "jedi";
     setForceSide(newSide);
-    localStorage.setItem("isAnakin", newSide === "jedi");
+    localStorage.setItem("forceSide", newSide);
     document.documentElement.dataset.theme = newSide;
   };
 
