@@ -5,6 +5,8 @@ import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext, useRef } from "react";
 import { get, del, patch } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
+import { TaskbarContext } from "@/context/TaskbarContext";
+import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 import { ChatTitleContext } from "@/context/ChatTitleContext";
 
 const ChatList = () => {
@@ -79,11 +81,23 @@ const ChatEntry = ({
   setContextTitle,
 }) => {
   const router = useRouter();
+  const { openChats, setOpenChats } = useContext(TaskbarContext);
+  const { setProfileActive } = useContext(ProfileWindowContext);
+  
   const inputRef = useRef(null);
 
   const handleDelete = async () => {
     del(`/api/chats/${id}/`);
     setNumDeleted(numDeleted + 1);
+    setOpenChats(openChats.filter((c) => c.id !== id));
+  };
+
+  const handleOpen = () => {
+    if (!openChats.some((chat) => chat.id === id)) {
+      setOpenChats([...openChats, { id: id, title: title }]);
+    }
+    setProfileActive(false);
+    router.push(`/chats/${id}`);
   };
 
   const handleRename = async (newTitle) => {
@@ -146,5 +160,5 @@ const ChatEntry = ({
     }
   };
 
-  return <div className={styles.entryAndButton}>{divLoader()}</div>;
+  return <div className={styles.entryAndButton} onClick={handleOpen}>{divLoader()}</div>;
 };

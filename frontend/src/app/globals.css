@@ -1,6 +1,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bg-2: #f2f2f2;
+  --bg-3: #cccccc;
+  --bg-small: #c0c0c0;
+  --bg-image: url("/imgs/bliss.jpg");
+}
+
+[data-theme="sith"] {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --bg-2: #272727;
+  --bg-3: #343434;
+  --bg-small: #0a0a0a;
+  --bg-image: url("/imgs/bliss_night.png");
 }
 
 @font-face {
@@ -23,17 +36,15 @@ body {
 
 html {
   font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
-  scrollbar-color: blue darkblue;
-  scrollbar-width: thin;
 }
 
 body {
   color: var(--foreground);
   background-color: white;
-  background-image: url("/imgs/bliss.jpg");
+  background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-
+  scrollbar-color: var(--foreground) var(--background);
   font-family: "Windows XP Tahoma", Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

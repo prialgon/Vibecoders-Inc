@@ -2,16 +2,21 @@
 import styles from "./styles.module.css";
 import { post } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-
+import { DarthVaderContext } from "@/context/DarthVaderContext";
+import { ProfileWindowContext } from "@/context/ProfileWindowContext";
+import { useContext, useRef, useState} from "react";
 const Settings = () => {
   const router = useRouter();
+
+  const { forceSide, changeSide } = useContext(DarthVaderContext);
+  const { setProfileActive } = useContext(ProfileWindowContext);
   const [createChat, setCreateChat] = useState(false);
   const inputRef = useRef(null);
 
   const handleCreateChat = async (title) => {
     const response = await post("api/chats/", { title: title });
     router.push(`/chats/${response.id}`);
+    setProfileActive(false);
     setCreateChat(false);
   };
 
@@ -64,7 +69,7 @@ const Settings = () => {
         <img src="/imgs/Search.png" className={styles.entryIcon} />
         Search Chats
       </button>
-      <button className={styles.settingsEntry}>
+      <button className={styles.settingsEntry} onClick={changeSide}>
         <img src="/imgs/darkmode.png" className={styles.entryIcon} />
         Toggle Dark Mode
       </button>
@@ -75,7 +80,10 @@ const Settings = () => {
       </button>
       <button
         className={styles.settingsEntry}
-        onClick={() => router.push("/settings")}
+        onClick={() => {
+          setProfileActive(false);
+          router.push("/settings");
+        }}
       >
         <img src="/imgs/users.png" className={styles.entryIcon} />
         User Settings

@@ -14,6 +14,9 @@
   scrollbar-width: thin;
   grid-area: tabs;
   background-color: darkblue;
+
+  min-height: 3.5rem;
+  scrollbar-color: blue darkblue;
 }
 
 .startButton {
@@ -34,7 +37,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  max-width: 16rem;
+  width: 16rem;
 }
 
 .tabIcon {

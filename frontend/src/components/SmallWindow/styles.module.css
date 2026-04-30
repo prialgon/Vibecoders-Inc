@@ -25,7 +25,8 @@
   display: grid;
   grid-template-rows: 7% 93%;
   grid-template-areas: "form-header" "content";
-  background-color: #c0c0c0;
+  background-color: var(--bg-small);
+  color: var(--foreground);
   border-style: solid;
   border-color: #777777;
   border-width: 3px;
