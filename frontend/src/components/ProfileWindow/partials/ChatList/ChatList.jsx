@@ -83,7 +83,7 @@ const ChatEntry = ({
   const router = useRouter();
   const { openChats, setOpenChats } = useContext(TaskbarContext);
   const { setProfileActive } = useContext(ProfileWindowContext);
-  
+
   const inputRef = useRef(null);
 
   const handleDelete = async () => {
@@ -110,10 +110,7 @@ const ChatEntry = ({
     if (!rename) {
       return (
         <>
-          <button
-            className={styles.chatEntry}
-            onClick={() => router.push(`/chats/${id}`)}
-          >
+          <button className={styles.chatEntry} onClick={handleOpen}>
             <img src="/imgs/chat_icon.png" className={styles.entryIcon} />
             <p className={styles.entryTitle}>{title}</p>
           </button>
@@ -160,5 +157,5 @@ const ChatEntry = ({
     }
   };
 
-  return <div className={styles.entryAndButton} onClick={handleOpen}>{divLoader()}</div>;
+  return <div className={styles.entryAndButton}>{divLoader()}</div>;
 };
