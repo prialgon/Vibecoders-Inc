@@ -104,6 +104,12 @@ const ChatEntry = ({
     await patch(`/api/chats/${id}/`, { title: newTitle });
     setContextTitle(newTitle);
     setRename(null);
+    if (openChats.some((chat) => chat.id == id)) {
+      setOpenChats([
+        ...openChats.filter((chat) => chat.id != id),
+        { id: id, title: newTitle },
+      ]);
+    }
   };
 
   const divLoader = () => {

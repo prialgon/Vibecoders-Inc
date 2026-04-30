@@ -4,7 +4,8 @@ import { post } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
 import { DarthVaderContext } from "@/context/DarthVaderContext";
 import { ProfileWindowContext } from "@/context/ProfileWindowContext";
-import { useContext, useRef, useState} from "react";
+import { useContext, useRef, useState } from "react";
+import { TaskbarContext } from "@/context/TaskbarContext";
 const Settings = () => {
   const router = useRouter();
 
@@ -12,12 +13,16 @@ const Settings = () => {
   const { setProfileActive } = useContext(ProfileWindowContext);
   const [createChat, setCreateChat] = useState(false);
   const inputRef = useRef(null);
+  const { openChats, setOpenChats } = useContext(TaskbarContext);
 
   const handleCreateChat = async (title) => {
     const response = await post("api/chats/", { title: title });
-    router.push(`/chats/${response.id}`);
     setProfileActive(false);
     setCreateChat(false);
+    if (!openChats.some((chat) => chat.id === response.id)) {
+      setOpenChats([...openChats, { id: response.id, title: title }]);
+    }
+    router.push(`/chats/${response.id}`);
   };
 
   return (
@@ -29,7 +34,7 @@ const Settings = () => {
           type="button"
         >
           <img src="/imgs/Add.png" className={styles.entryIcon} />
-          New Chat
+          <p className={styles.settingsEntryTitle}>New Chat</p>
         </button>
         {createChat ? (
           <div className={styles.inputDiv}>
@@ -63,20 +68,20 @@ const Settings = () => {
       </div>
       <button className={styles.settingsEntry}>
         <img src="/imgs/tokens.png" className={styles.entryIcon} />
-        Buy More Tokens
+        <p className={styles.settingsEntryTitle}>Buy More Tokens</p>
       </button>
       <button className={styles.settingsEntry}>
         <img src="/imgs/Search.png" className={styles.entryIcon} />
-        Search Chats
+        <p className={styles.settingsEntryTitle}>Search Chats</p>
       </button>
       <button className={styles.settingsEntry} onClick={changeSide}>
         <img src="/imgs/darkmode.png" className={styles.entryIcon} />
-        Toggle Dark Mode
+        <p className={styles.settingsEntryTitle}>Toggle Dark Mode</p>
       </button>
 
       <button className={styles.settingsEntry}>
         <img src="/imgs/admin_panel.png" className={styles.entryIcon} />
-        Admin Panel
+        <p className={styles.settingsEntryTitle}>Admin Panel</p>
       </button>
       <button
         className={styles.settingsEntry}
@@ -86,7 +91,7 @@ const Settings = () => {
         }}
       >
         <img src="/imgs/users.png" className={styles.entryIcon} />
-        User Settings
+        <p className={styles.settingsEntryTitle}>User Settings</p>
       </button>
     </div>
   );
