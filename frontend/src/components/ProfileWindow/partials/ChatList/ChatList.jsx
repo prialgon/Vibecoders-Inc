@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext, useRef } from "react";
 import { get, del, patch } from "@/utils/APIHandler";
 import { useRouter } from "next/navigation";
+import { ChatTitleContext } from "@/context/ChatTitleContext";
 
 const ChatList = () => {
   const [numPage, setNumPage] = useState(1);
@@ -13,6 +14,7 @@ const ChatList = () => {
   const [loading, setLoading] = useState(true);
   const [numDeleted, setNumDeleted] = useState(0);
   const [rename, setRename] = useState(null);
+  const { title, setTitle } = useContext(ChatTitleContext);
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +42,7 @@ const ChatList = () => {
                 numDeleted={numDeleted}
                 rename={rename === entry["id"]}
                 setRename={setRename}
+                setContextTitle={setTitle}
               />
             ))}
       </div>
@@ -73,6 +76,7 @@ const ChatEntry = ({
   setNumDeleted,
   rename,
   setRename,
+  setContextTitle,
 }) => {
   const router = useRouter();
   const inputRef = useRef(null);
@@ -84,6 +88,7 @@ const ChatEntry = ({
 
   const handleRename = async (newTitle) => {
     await patch(`/api/chats/${id}/`, { title: newTitle });
+    setContextTitle(newTitle);
     setRename(null);
   };
 

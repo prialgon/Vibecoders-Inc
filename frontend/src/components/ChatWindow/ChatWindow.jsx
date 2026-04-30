@@ -31,7 +31,7 @@ const ChatWindow = ({ id, title }) => {
 
     setMessages((prev) => [...prev, msg]);
 
-    const response = await post(`api/chats/${id}/`, msg);
+    const response = await post(`/api/chats/${id}/`, msg);
 
     if (!response) return;
 

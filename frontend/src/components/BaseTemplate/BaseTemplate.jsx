@@ -10,15 +10,18 @@ import {
   ProfileWindowContext,
 } from "@/context/ProfileWindowContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { ChatTitleProvider } from "@/context/ChatTitleContext";
 const BaseTemplate = ({ children }) => {
   return (
     <ProfileProvider>
-      {" "}
-      <div className={styles.layout}>
-        <Header />
-        <div className={styles.content}>{children}</div>
-        <Taskbar />
-      </div>
+      <ChatTitleProvider>
+        {" "}
+        <div className={styles.layout}>
+          <Header />
+          <div className={styles.content}>{children}</div>
+          <Taskbar />
+        </div>
+      </ChatTitleProvider>
     </ProfileProvider>
   );
 };
