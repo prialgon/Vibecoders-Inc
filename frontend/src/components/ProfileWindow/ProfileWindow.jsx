@@ -8,13 +8,16 @@ import { Suspense } from "react";
 import { TaskbarContext } from "@/context/TaskbarContext";
 import { useContext } from "react";
 import { DarthVaderContext } from "@/context/DarthVaderContext";
+import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 const ProfileWindow = () => {
   const router = useRouter();
   const { setOpenChats } = useContext(TaskbarContext);
+  const { setProfileActive } = useContext(ProfileWindowContext);
   const handleLogOut = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     setOpenChats([]);
+    setProfileActive(false);
     router.push("/login");
   };
 
