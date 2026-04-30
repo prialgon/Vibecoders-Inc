@@ -21,10 +21,13 @@
   border-left: none;
   border-right: none;
   border-top: none;
+  cursor: pointer;
 }
+
 .settingsEntry:hover {
-  background-color: #f2f2f2;
+  background-color: #e0e0e0;
 }
+
 .settingsEntry:active {
   background-color: #cccccc;
 }
@@ -32,4 +35,71 @@
 .entryIcon {
   width: 2.5rem;
   margin-right: 1rem;
+}
+
+.createChatDiv {
+  width: 100%;
+  height: auto;
+}
+
+.inputDiv {
+  display: grid;
+  grid-template-columns: 1fr 2.75rem 2.75rem;
+  width: 100%;
+  position: relative;
+  margin-top: -1px;
+}
+
+.createChatInput {
+  width: 100%;
+  height: 2.75rem;
+  padding: 0 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-right: none;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.createChatInput:focus {
+  outline: none;
+  border: 2px solid black;
+}
+
+.createChatIcon {
+  width: 1.6rem;
+}
+
+.confirmNameButton,
+.cancelNameButton {
+  height: 2.75rem;
+  background-color: #f2f2f2;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.confirmNameButton {
+  border-right: none;
+}
+
+.cancelNameButton {
+  border-left: none;
+}
+
+.confirmNameButton:hover,
+.cancelNameButton:hover {
+  background-color: #dcdcdc;
+}
+
+.confirmNameButton:active,
+.cancelNameButton:active {
+  background-color: #bfbfbf;
 }
