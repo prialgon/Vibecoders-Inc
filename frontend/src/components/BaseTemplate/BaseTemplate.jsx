@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import Header from "./partials/Header/Header";
 import Footer from "./partials/Footer/Footer";
 import Taskbar from "@/components/Taskbar/Taskbar";
-import { useContext, useState, createContext } from "react";
+import { useContext, useState, createContext, useEffect } from "react";
 import {
   ProfileProvider,
   ProfileWindowContext,
@@ -16,7 +16,9 @@ import {
 } from "@/context/TaskbarContext";
 import { DarthVaderContextProvider } from "@/context/DarthVaderContext";
 import ProfileWindow from "@/components/ProfileWindow/ProfileWindow";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { testAccessToken, refreshToken } from "@/utils/APIHandler";
+import { AuthContext } from "@/context/AuthContext";
 
 const BaseTemplate = ({ children }) => {
   return (
@@ -34,9 +36,15 @@ const BaseTemplate = ({ children }) => {
 
 const BaseTemplateContent = ({ children }) => {
   const { profileActive } = useContext(ProfileWindowContext);
+  const { verifying, verifyTokens } = useContext(AuthContext);
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login" || pathname === "/register";
-
+  const isAuthPage =
+    pathname === "/" || pathname === "/login" || pathname === "/register";
+  useEffect(() => {
+    if (!isAuthPage) {
+      verifyTokens();
+    }
+  }, [isAuthPage]);
   return (
     <div className={styles.layout}>
       {!isAuthPage && <Header />}

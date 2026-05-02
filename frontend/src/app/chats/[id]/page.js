@@ -8,38 +8,33 @@ import ProfileWindow from "@/components/ProfileWindow/ProfileWindow";
 import { get } from "@/utils/APIHandler";
 import { ChatTitleContext } from "@/context/ChatTitleContext";
 
+import { AuthContext } from "@/context/AuthContext";
 const Chat = () => {
   const params = useParams();
   const id = params.id;
   const { profileActive, setProfileActive } = useContext(ProfileWindowContext);
   const { title, setTitle } = useContext(ChatTitleContext);
   const [localTitle, setLocalTitle] = useState(title);
+  const { verifying } = useContext(AuthContext);
 
   const router = useRouter();
-  useEffect(() => {
-    const token = localStorage.getItem("access");
-    if (!token) {
-      router.replace("/login");
-    }
-    return () => {
-      setProfileActive(false);
-    };
-  }, [router, setProfileActive]);
 
   useEffect(() => {
-    const fetchChat = async () => {
-      const data = await get(`/api/chats/${id}/`);
-      if (!data.title) return;
-      setLocalTitle(data.title);
-    };
-    if (id) fetchChat();
-  }, [id, title]);
+    if (!verifying) {
+      const fetchChat = async () => {
+        const data = await get(`/api/chats/${id}/`);
+        if (!data.title) return;
+        setLocalTitle(data.title);
+      };
+      if (id) fetchChat();
+    }
+  }, [id, title, verifying]);
 
   return (
     <>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <ChatWindow id={id} title={localTitle} />
+      {!verifying ? <ChatWindow id={id} title={localTitle} /> : null}
       {profileActive ? <ProfileWindow /> : null}
     </>
   );

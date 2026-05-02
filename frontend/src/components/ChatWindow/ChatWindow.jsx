@@ -11,10 +11,9 @@ const ChatWindow = ({ id, title }) => {
   const bottomRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const { openChats, setOpenChats } = useContext(TaskbarContext);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    if (!openChats.some((chat) => chat.id == id))
-      setOpenChats([...openChats, { id: id, title: title }]);
     async function fetchChat() {
       const data = await get(`api/chats/${id}`);
       setMessages(data.messages);
@@ -22,6 +21,19 @@ const ChatWindow = ({ id, title }) => {
 
     if (id) fetchChat();
   }, [id]);
+
+  useEffect(() => {
+    if (!hidden) {
+      if (!openChats.some((chat) => chat.id == id))
+        setOpenChats([...openChats, { id: id, title: title }]);
+      if (openChats.some((chat) => chat.id == id && chat.title != title)) {
+        setOpenChats([
+          ...openChats.filter((c) => c.id != id),
+          { id: id, title: title },
+        ]);
+      }
+    }
+  }, [id, title, setOpenChats, hidden]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,7 +56,7 @@ const ChatWindow = ({ id, title }) => {
 
   return (
     <div className={styles.window}>
-      <ChatWindowHeader title={title} id={id} />
+      <ChatWindowHeader title={title} id={id} setHidden={setHidden} />
       <div className={styles.content}>
         <div className={styles.messages}>
           {messages.map((msg, id) => (
@@ -64,7 +76,7 @@ const ChatWindow = ({ id, title }) => {
   );
 };
 
-const ChatWindowHeader = ({ title, id }) => {
+const ChatWindowHeader = ({ title, id, setHidden }) => {
   const router = useRouter();
   const { openChats, setOpenChats } = useContext(TaskbarContext);
   return (
@@ -82,6 +94,7 @@ const ChatWindowHeader = ({ title, id }) => {
           src="/imgs/close.png"
           className={styles.close}
           onClick={() => {
+            setHidden(true);
             setOpenChats(openChats.filter((c) => c.id != id));
             router.push("/home");
           }}

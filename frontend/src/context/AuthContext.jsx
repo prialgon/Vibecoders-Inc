@@ -1,40 +1,44 @@
+"use client";
 import React from "react";
 import { useState, createContext, useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
+import { testAccessToken, refreshToken } from "@/utils/APIHandler";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [access, setAccess] = useState(null);
-  const [refresh, setRefresh] = useState(null);
+  const [verifying, setVerifying] = useState(true);
+  const router = useRouter();
 
-  useEffect(() => {
-    const savedAccess = localStorage.getItem("access");
-    const savedRefresh = localStorage.getItem("refresh");
-
-    if (savedAccess) {
-      setAccess(savedAccess);
+  const verifyTokens = async () => {
+    setVerifying(true);
+    const token = localStorage.getItem("access");
+    const refresh = localStorage.getItem("refresh");
+    let isValid = false;
+    const refreshAccess = async () => {
+      if (!isValid) {
+        let newAccess = await refreshToken(refresh);
+        if (newAccess == null) {
+          router.replace("/login/");
+        } else {
+          localStorage.setItem("access", newAccess.access);
+          localStorage.setItem("refresh", newAccess.refresh);
+        }
+      }
+    };
+    if (!refresh) {
+      router.replace("/login");
+    } else {
+      if (token) {
+        isValid = testAccessToken(token);
+      }
+      if (!isValid) await refreshAccess();
     }
-    if (savedRefresh) {
-      setRefresh(savedRefresh);
-    }
-  }, []);
-
-  const login = (access, refresh) => {
-    localStorage.setItem("access", access);
-    localStorage.setItem("refresh", refresh);
-    setAccess(access);
-    setRefresh(refresh);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    setAccess(null);
-    setRefresh(null);
+    setVerifying(false);
   };
 
   return (
-    <AuthContext.Provider value={{ access, refresh, login, logout }}>
+    <AuthContext.Provider value={{ verifying, verifyTokens }}>
       {children}
     </AuthContext.Provider>
   );

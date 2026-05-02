@@ -163,3 +163,57 @@ export const del = async (path) => {
     return null;
   }
 };
+
+export const testAccessToken = (access) => {
+  const jwt = parseJwt(access);
+
+  if (Date.now() / 1000 > jwt.exp) {
+    return false;
+  }
+  return true;
+};
+
+export const refreshToken = async (refresh) => {
+  let url = `${API_BASE_URL}api/auth/refresh/`;
+  let headers = {
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ refresh: refresh }),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      return { access: responseData.access, refresh: responseData.refresh };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+// Source - https://stackoverflow.com/a/38552302
+// Posted by Peheje, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-05-02, License - CC BY-SA 4.0
+
+function parseJwt(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    window
+      .atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(""),
+  );
+
+  return JSON.parse(jsonPayload);
+}
