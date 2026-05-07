@@ -1,6 +1,47 @@
 "use client";
 const API_BASE_URL = "http://localhost:8000/";
 
+const handleResponse = async (response, returnJSON = true) => {
+  let data = null;
+
+  try {
+    data = returnJSON ? await response.json() : response;
+  } catch {
+    data = null;
+  }
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      data: null,
+      error: {
+        status: response.status,
+        message:
+          data?.detail ||
+          data?.message ||
+          data?.error ||
+          `Request failed with status ${response.status}`,
+        details: data,
+      },
+    };
+  }
+
+  return data;
+};
+
+const errorResponse = (error) => {
+  console.error(error);
+  return {
+    ok: false,
+    data: null,
+    error: {
+      status: null,
+      message: "Could not connect to backend",
+      details: error,
+    },
+  };
+};
+
 export const get = async (path, params, returnJSON = true) => {
   let url = `${API_BASE_URL}${path}`;
 
@@ -25,12 +66,9 @@ export const get = async (path, params, returnJSON = true) => {
   try {
     const response = await fetch(url, { headers: headers });
 
-    if (response.ok && returnJSON) return await response.json();
-    else if (!returnJSON) return response;
-    else console.error("An error occurred");
+    return await handleResponse(response, returnJSON);
   } catch (error) {
-    console.error(error);
-    return null;
+    return errorResponse(error);
   }
 };
 
@@ -56,14 +94,9 @@ export const post = async (path, data, returnJSON = true) => {
       body: JSON.stringify(data),
     });
 
-    if (response.ok && returnJSON) return await response.json();
-    else if (!returnJSON) return response;
-    else console.error("An error occurred");
-
-    throw new Error("Error in POST request. Code: " + response.status);
+    return await handleResponse(response, returnJSON);
   } catch (error) {
-    console.error(error);
-    return null;
+    return errorResponse(error);
   }
 };
 
@@ -89,14 +122,9 @@ export const put = async (path, data, returnJSON = true) => {
       body: JSON.stringify(data),
     });
 
-    if (response.ok && returnJSON) return await response.json();
-    else if (!returnJSON) return response;
-    else console.error("An error occurred");
-
-    throw new Error("Error in POST request. Code: " + response.status);
+    return await handleResponse(response, returnJSON);
   } catch (error) {
-    console.error(error);
-    return null;
+    return errorResponse(error);
   }
 };
 
@@ -122,14 +150,9 @@ export const patch = async (path, data, returnJSON = true) => {
       body: JSON.stringify(data),
     });
 
-    if (response.ok && returnJSON) return await response.json();
-    else if (!returnJSON) return response;
-    else console.error("An error occurred");
-
-    throw new Error("Error in POST request. Code: " + response.status);
+    return await handleResponse(response, returnJSON);
   } catch (error) {
-    console.error(error);
-    return null;
+    return errorResponse(error);
   }
 };
 
@@ -154,13 +177,9 @@ export const del = async (path) => {
       headers,
     });
 
-    if (response.ok) {
-      return;
-    }
-    throw new Error("Error in POST request. Code: " + response.status);
+    return await handleResponse(response, false);
   } catch (error) {
-    console.error(error);
-    return null;
+    return errorResponse(error);
   }
 };
 
@@ -186,15 +205,14 @@ export const refreshToken = async (refresh) => {
       body: JSON.stringify({ refresh: refresh }),
     });
 
-    if (response.ok) {
-      const responseData = await response.json();
+    const responseData = await handleResponse(response);
+
+    if (responseData && responseData.ok !== false) {
       return { access: responseData.access, refresh: responseData.refresh };
-    } else {
-      return null;
     }
-  } catch (error) {
-    console.error(error);
     return null;
+  } catch (error) {
+    return errorResponse(error);
   }
 };
 
