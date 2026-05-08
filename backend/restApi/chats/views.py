@@ -75,7 +75,7 @@ class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         llm_response = call_llm(history)
 
         msg = ChatMessage.objects.create(
-            chat_id=chat, role="assistant", content=llm_response
+            chat_id=chat, role="system", content=llm_response
         )
         serializer_llm = ChatMessageSerializer(msg)
         return Response(serializer_llm.data, status=201)
