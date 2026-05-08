@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import styles from "./styles.module.css";
 import { use, useState, useMemo, useEffect, useContext, useRef } from "react";
 import { get, del, patch } from "@/utils/APIHandler";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { TaskbarContext } from "@/context/TaskbarContext";
 import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 import { ChatTitleContext } from "@/context/ChatTitleContext";
@@ -101,6 +101,7 @@ const ChatEntry = ({
   const { setProfileActive } = useContext(ProfileWindowContext);
 
   const inputRef = useRef(null);
+  const path = usePathname();
 
   const handleDelete = async () => {
     let response;
@@ -116,13 +117,13 @@ const ChatEntry = ({
       return;
     }
     setNumDeleted(numDeleted + 1);
-    setOpenChats(openChats.filter((c) => c.id !== id));
+    setOpenChats(openChats.filter((c) => c.id != id));
+    if (path.endsWith(`chats/${id}`)) {
+      router.push("/home");
+    }
   };
 
   const handleOpen = () => {
-    if (!openChats.some((chat) => chat.id === id)) {
-      setOpenChats([...openChats, { id: id, title: title }]);
-    }
     setProfileActive(false);
     router.push(`/chats/${id}`);
   };

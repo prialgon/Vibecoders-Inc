@@ -40,7 +40,7 @@ const ChatWindow = ({ id, title }) => {
     if (!hidden) {
       if (!openChats.some((chat) => chat.id == id))
         setOpenChats([...openChats, { id: id, title: title }]);
-      if (openChats.some((chat) => chat.id == id && chat.title != title)) {
+      if (openChats.some((chat) => chat.id == id && chat.title !== title)) {
         setOpenChats([
           ...openChats.filter((c) => c.id != id),
           { id: id, title: title },
@@ -88,7 +88,9 @@ const ChatWindow = ({ id, title }) => {
       <ChatWindowHeader title={title} id={id} setHidden={setHidden} />
       <div className={styles.content}>
         <div className={styles.messages}>
-          {error ? <p className={styles.errorBox}>error fetching data</p> : null}
+          {error ? (
+            <p className={styles.errorBox}>error fetching data</p>
+          ) : null}
           {messages.map((msg, id) => (
             <ChatMessage
               key={id}
