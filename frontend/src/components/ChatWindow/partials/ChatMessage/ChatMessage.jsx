@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-const ChatMessage = ({ user, message }) => {
+const ChatMessage = ({ user, message, loading = false }) => {
   return (
     <div
       className={`${styles.messageRow} ${user ? styles.rightMessageContainer : styles.leftMessageContainer}`}
@@ -9,7 +9,18 @@ const ChatMessage = ({ user, message }) => {
       <div
         className={`${styles.messageContainer} ${user ? styles.rightMessage : styles.leftMessage}`}
       >
-        <p className={styles.message}>{message}</p>
+        {loading ? (
+          <div className={styles.loadingWrap}>
+            <img src="/imgs/clippy.webp" className={styles.clippy} alt="Clippy" />
+            <div className={styles.loadingDots} aria-label="Loading response">
+              <span className={styles.dot}></span>
+              <span className={styles.dot}></span>
+              <span className={styles.dot}></span>
+            </div>
+          </div>
+        ) : (
+          <p className={styles.message}>{message}</p>
+        )}
       </div>
     </div>
   );

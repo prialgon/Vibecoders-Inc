@@ -13,6 +13,7 @@ const ChatWindow = ({ id, title }) => {
   const { openChats, setOpenChats } = useContext(TaskbarContext);
   const [hidden, setHidden] = useState(false);
   const [error, setError] = useState(false);
+  const [loadingReply, setLoadingReply] = useState(false);
 
   useEffect(() => {
     async function fetchChat() {
@@ -58,7 +59,9 @@ const ChatWindow = ({ id, title }) => {
       content: text,
     };
 
+    setError(false);
     setMessages((prev) => [...prev, msg]);
+    setLoadingReply(true);
 
     let response;
     try {
@@ -66,14 +69,17 @@ const ChatWindow = ({ id, title }) => {
     } catch (err) {
       console.error(err);
       setError(true);
+      setLoadingReply(false);
       return;
     }
 
     if (!response || response?.ok === false || !response.role) {
       setError(true);
+      setLoadingReply(false);
       return;
     }
     setError(false);
+    setLoadingReply(false);
     setMessages((prev) => [...prev, response]);
   };
 
@@ -90,6 +96,7 @@ const ChatWindow = ({ id, title }) => {
               message={msg.content}
             />
           ))}
+          {loadingReply ? <ChatMessage user={false} loading={true} /> : null}
           <div ref={bottomRef} />
         </div>
         <div className={styles.inputArea}>
