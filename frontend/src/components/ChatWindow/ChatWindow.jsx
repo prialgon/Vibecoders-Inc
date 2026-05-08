@@ -12,11 +12,24 @@ const ChatWindow = ({ id, title }) => {
   const [messages, setMessages] = useState([]);
   const { openChats, setOpenChats } = useContext(TaskbarContext);
   const [hidden, setHidden] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchChat() {
-      const data = await get(`api/chats/${id}`);
-      setMessages(data.messages);
+      try {
+        const data = await get(`api/chats/${id}`);
+        if (data?.ok === false || !data?.messages) {
+          setError(true);
+          setMessages([]);
+          return;
+        }
+        setError(false);
+        setMessages(data.messages);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+        setMessages([]);
+      }
     }
 
     if (id) fetchChat();
@@ -47,10 +60,20 @@ const ChatWindow = ({ id, title }) => {
 
     setMessages((prev) => [...prev, msg]);
 
-    const response = await post(`/api/chats/${id}/`, msg);
+    let response;
+    try {
+      response = await post(`/api/chats/${id}/`, msg);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      return;
+    }
 
-    if (!response) return;
-
+    if (!response || response?.ok === false || !response.role) {
+      setError(true);
+      return;
+    }
+    setError(false);
     setMessages((prev) => [...prev, response]);
   };
 
@@ -59,6 +82,7 @@ const ChatWindow = ({ id, title }) => {
       <ChatWindowHeader title={title} id={id} setHidden={setHidden} />
       <div className={styles.content}>
         <div className={styles.messages}>
+          {error ? <p className={styles.errorBox}>error fetching data</p> : null}
           {messages.map((msg, id) => (
             <ChatMessage
               key={id}

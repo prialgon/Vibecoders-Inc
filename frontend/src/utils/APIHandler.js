@@ -2,10 +2,12 @@
 const API_BASE_URL = "http://localhost:8000/";
 
 const handleResponse = async (response, returnJSON = true) => {
+  if (!returnJSON) return response;
+
   let data = null;
 
   try {
-    data = returnJSON ? await response.json() : response;
+    data = await response.json();
   } catch {
     data = null;
   }

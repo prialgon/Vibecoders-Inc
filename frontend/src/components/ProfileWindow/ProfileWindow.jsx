@@ -4,15 +4,49 @@ import ChatList from "./partials/ChatList/ChatList";
 import Settings from "./partials/Settings/Settings";
 import { useRouter } from "next/navigation";
 import { get } from "@/utils/APIHandler.js";
-import { Suspense } from "react";
 import { TaskbarContext } from "@/context/TaskbarContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DarthVaderContext } from "@/context/DarthVaderContext";
 import { ProfileWindowContext } from "@/context/ProfileWindowContext";
 const ProfileWindow = () => {
   const router = useRouter();
   const { setOpenChats } = useContext(TaskbarContext);
   const { setProfileActive } = useContext(ProfileWindowContext);
+  const [username, setUsername] = useState("Loading...");
+  const [usage, setUsage] = useState(null);
+  const [profileError, setProfileError] = useState(false);
+  const [usageError, setUsageError] = useState(false);
+
+  useEffect(() => {
+    get("/api/users/profile", null)
+      .then((res) => {
+        if (res?.ok === false || !res?.username) {
+          setProfileError(true);
+          return;
+        }
+        setProfileError(false);
+        setUsername(res["username"]);
+      })
+      .catch((err) => {
+        console.error(err);
+        setProfileError(true);
+      });
+
+    get("/api/usage/", null)
+      .then((res) => {
+        if (res?.ok === false || !res?.results?.[0]) {
+          setUsageError(true);
+          return;
+        }
+        setUsageError(false);
+        setUsage(res.results[0]);
+      })
+      .catch((err) => {
+        console.error(err);
+        setUsageError(true);
+      });
+  }, []);
+
   const handleLogOut = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
@@ -26,29 +60,23 @@ const ProfileWindow = () => {
       <div className={styles.userProfile}>
         <div className={styles.userInfo}>
           <img src="/imgs/clippy.webp" className={styles.userIcon} />
-          <h2>
-            <Suspense fallback="Loading...">
-              {get("/api/users/profile", null).then((res) => res["username"])}
-            </Suspense>{" "}
-          </h2>
+          {profileError ? (
+            <p className={styles.errorBox}>error fetching data</p>
+          ) : (
+            <h2>{username}</h2>
+          )}
         </div>
         <div className={styles.rightText}>
-          <Suspense fallback="...">
-            {get("/api/usage/", null)
-              .then((res) => res.results)
-              .then((result) => {
-                const fecha = new Date(result[0].reset_date);
-                return (
-                  <>
-                    <p>
-                      Available Messages:{" "}
-                      {result[0].messages_limit - result[0].messages_used}
-                    </p>
-                    <p>Reset date: {fecha.toLocaleString()}</p>
-                  </>
-                );
-              })}
-          </Suspense>
+          {usageError ? (
+            <p className={styles.errorBox}>error fetching data</p>
+          ) : usage ? (
+            <>
+              <p>Available Messages: {usage.messages_limit - usage.messages_used}</p>
+              <p>Reset date: {new Date(usage.reset_date).toLocaleString()}</p>
+            </>
+          ) : (
+            "..."
+          )}
         </div>
       </div>
       <div className={styles.userContent}>

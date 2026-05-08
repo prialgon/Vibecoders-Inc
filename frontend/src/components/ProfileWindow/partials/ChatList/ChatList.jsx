@@ -16,16 +16,29 @@ const ChatList = () => {
   const [loading, setLoading] = useState(true);
   const [numDeleted, setNumDeleted] = useState(0);
   const [rename, setRename] = useState(null);
+  const [error, setError] = useState(false);
   const { title, setTitle } = useContext(ChatTitleContext);
 
   useEffect(() => {
     setLoading(true);
+    setError(false);
     get(`api/chats/`, { page: numPage })
       .then((res) => {
+        if (res?.ok === false || !res?.results) {
+          setError(true);
+          setChats([]);
+          setIsNext(false);
+          return;
+        }
         setChats(res.results);
         setIsNext(!!res.next);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+        setChats([]);
+        setIsNext(false);
+      })
       .finally(() => setLoading(false));
   }, [numPage, numDeleted, rename]);
 
@@ -33,6 +46,7 @@ const ChatList = () => {
     <div className={styles.sectionLayout}>
       <div className={styles.chatList}>
         <h3 className={styles.chatTitle}>Chats</h3>
+        {error ? <p className={styles.errorBox}>error fetching data</p> : null}
         {loading
           ? "Loading chats..."
           : chats.map((entry) => (
@@ -45,6 +59,7 @@ const ChatList = () => {
                 rename={rename === entry["id"]}
                 setRename={setRename}
                 setContextTitle={setTitle}
+                setError={setError}
               />
             ))}
       </div>
@@ -79,6 +94,7 @@ const ChatEntry = ({
   rename,
   setRename,
   setContextTitle,
+  setError,
 }) => {
   const router = useRouter();
   const { openChats, setOpenChats } = useContext(TaskbarContext);
@@ -87,7 +103,18 @@ const ChatEntry = ({
   const inputRef = useRef(null);
 
   const handleDelete = async () => {
-    del(`/api/chats/${id}/`);
+    let response;
+    try {
+      response = await del(`/api/chats/${id}/`);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      return;
+    }
+    if (response?.ok === false) {
+      setError(true);
+      return;
+    }
     setNumDeleted(numDeleted + 1);
     setOpenChats(openChats.filter((c) => c.id !== id));
   };
@@ -101,7 +128,18 @@ const ChatEntry = ({
   };
 
   const handleRename = async (newTitle) => {
-    await patch(`/api/chats/${id}/`, { title: newTitle });
+    let response;
+    try {
+      response = await patch(`/api/chats/${id}/`, { title: newTitle });
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      return;
+    }
+    if (response?.ok === false) {
+      setError(true);
+      return;
+    }
     setContextTitle(newTitle);
     setRename(null);
     if (openChats.some((chat) => chat.id == id)) {

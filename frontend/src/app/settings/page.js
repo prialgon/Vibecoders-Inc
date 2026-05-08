@@ -10,13 +10,24 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "@/context/AuthContext";
 export default function Settings() {
   const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(false);
   const { verifying } = useContext(AuthContext);
 
   useEffect(() => {
     if (!verifying) {
-      get("api/users/profile").then((res) => {
-        setUserData(res);
-      });
+      get("api/users/profile")
+        .then((res) => {
+          if (res?.ok === false || !res?.username || !res?.email) {
+            setError(true);
+            return;
+          }
+          setError(false);
+          setUserData(res);
+        })
+        .catch((err) => {
+          console.error(err);
+          setError(true);
+        });
     }
   }, [verifying]);
 
@@ -31,7 +42,9 @@ export default function Settings() {
             title="User data"
             errorId="userError"
           >
-            {userData ? (
+            {error ? (
+              <p className={styles.errorBox}>error fetching data</p>
+            ) : userData ? (
               <>
                 <h3>Username</h3>
                 <input

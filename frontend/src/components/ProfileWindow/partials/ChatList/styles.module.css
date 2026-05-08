@@ -51,6 +51,16 @@
   color: var(--foreground);
 }
 
+.errorBox {
+  background-color: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+  padding: 0.5rem;
+  width: 90%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 .entryIcon {
   width: 3rem;
 }

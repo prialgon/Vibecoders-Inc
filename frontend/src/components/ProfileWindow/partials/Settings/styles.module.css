@@ -110,3 +110,11 @@
 .cancelNameButton:active {
   background-color: var(--bg-3);
 }
+
+.errorBox {
+  background-color: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+  padding: 0.5rem;
+  text-align: center;
+}

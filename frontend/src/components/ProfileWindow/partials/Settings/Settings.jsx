@@ -12,11 +12,24 @@ const Settings = () => {
   const { forceSide, changeSide } = useContext(DarthVaderContext);
   const { setProfileActive } = useContext(ProfileWindowContext);
   const [createChat, setCreateChat] = useState(false);
+  const [error, setError] = useState(false);
   const inputRef = useRef(null);
   const { openChats, setOpenChats } = useContext(TaskbarContext);
 
   const handleCreateChat = async (title) => {
-    const response = await post("api/chats/", { title: title });
+    let response;
+    try {
+      response = await post("api/chats/", { title: title });
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      return;
+    }
+    if (response?.ok === false || !response?.id) {
+      setError(true);
+      return;
+    }
+    setError(false);
     setProfileActive(false);
     setCreateChat(false);
     if (!openChats.some((chat) => chat.id === response.id)) {
@@ -65,6 +78,7 @@ const Settings = () => {
         ) : (
           <></>
         )}
+        {error ? <p className={styles.errorBox}>error fetching data</p> : null}
       </div>
       <button className={styles.settingsEntry}>
         <img src="/imgs/tokens.png" className={styles.entryIcon} />

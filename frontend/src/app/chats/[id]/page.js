@@ -23,7 +23,7 @@ const Chat = () => {
     if (!verifying) {
       const fetchChat = async () => {
         const data = await get(`/api/chats/${id}/`);
-        if (!data.title) return;
+        if (!data?.title) return;
         setLocalTitle(data.title);
       };
       if (id) fetchChat();
