@@ -40,11 +40,13 @@ const ChatWindow = ({ id, title }) => {
     if (!hidden) {
       if (!openChats.some((chat) => chat.id == id))
         setOpenChats([...openChats, { id: id, title: title }]);
-      if (openChats.some((chat) => chat.id == id && chat.title !== title)) {
-        setOpenChats([
-          ...openChats.filter((c) => c.id != id),
-          { id: id, title: title },
-        ]);
+      if (openChats.some((chat) => chat.id == id && chat.title != title)) {
+        if (title != "Loading...") {
+          setOpenChats([
+            ...openChats.filter((c) => c.id != id),
+            { id: id, title: title },
+          ]);
+        }
       }
     }
   }, [id, title, setOpenChats, hidden]);

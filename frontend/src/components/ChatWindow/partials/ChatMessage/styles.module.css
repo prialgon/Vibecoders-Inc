@@ -69,12 +69,16 @@
   border-top-right-radius: 2rem;
   border-top-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
+  border: 3px solid var(--foreground);
+  background-color: #3550e4;
 }
 
 .rightMessage {
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;
   border-bottom-left-radius: 2rem;
+  border: 3px solid var(--foreground);
+  background-color: green;
 }
 
 @keyframes dotPulse {
