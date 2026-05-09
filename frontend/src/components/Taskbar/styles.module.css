@@ -38,6 +38,7 @@
   justify-content: space-evenly;
   align-items: center;
   width: 16rem;
+  min-width: 13rem;
 }
 
 .tabIcon {
