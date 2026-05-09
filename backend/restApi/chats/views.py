@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from django.db.models import Q
+
 from ai.llm_service import call_llm
 from django.utils import timezone
 from rest_framework import generics
@@ -31,6 +33,26 @@ class ChatListView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
+
+
+class ChatSearchView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ChatListCreateSerializer
+
+    def get_queryset(self):
+        user_id = self.request.user
+        if "content" in self.request.query_params:
+            text = self.request.query_params.get("content")
+
+            results = []
+
+            return Chat.objects.filter(
+                Q(user_id=user_id)
+                & (Q(title__icontains=text) | Q(messages__content__icontains=text))
+            ).distinct()
+
+        else:
+            return Chat.objects.filter(user_id=user_id)
 
 
 class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):

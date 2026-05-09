@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import ChatDetailAPIView, ChatListView
+from .views import ChatDetailAPIView, ChatListView, ChatSearchView
 
 app_name = "chats"
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
         ChatDetailAPIView.as_view(),
         name="chat-detail",
     ),
+    path("search/", ChatSearchView.as_view(), name="chat-search"),
 ]
