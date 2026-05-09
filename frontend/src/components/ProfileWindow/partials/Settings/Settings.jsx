@@ -10,7 +10,8 @@ const Settings = () => {
   const router = useRouter();
 
   const { forceSide, changeSide } = useContext(DarthVaderContext);
-  const { setProfileActive } = useContext(ProfileWindowContext);
+  const { setProfileActive, setSearchActive } =
+    useContext(ProfileWindowContext);
   const [createChat, setCreateChat] = useState(false);
   const [error, setError] = useState(false);
   const inputRef = useRef(null);
@@ -84,7 +85,10 @@ const Settings = () => {
         <img src="/imgs/tokens.png" className={styles.entryIcon} />
         <p className={styles.settingsEntryTitle}>Buy More Tokens</p>
       </button>
-      <button className={styles.settingsEntry}>
+      <button
+        className={styles.settingsEntry}
+        onClick={() => setSearchActive(true)}
+      >
         <img src="/imgs/Search.png" className={styles.entryIcon} />
         <p className={styles.settingsEntryTitle}>Search Chats</p>
       </button>

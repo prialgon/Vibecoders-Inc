@@ -6,9 +6,12 @@ export const ProfileWindowContext = createContext(false);
 
 export const ProfileProvider = ({ children }) => {
   const [profileActive, setProfileActive] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
 
   return (
-    <ProfileWindowContext.Provider value={{ profileActive, setProfileActive }}>
+    <ProfileWindowContext.Provider
+      value={{ profileActive, setProfileActive, searchActive, setSearchActive }}
+    >
       {children}
     </ProfileWindowContext.Provider>
   );

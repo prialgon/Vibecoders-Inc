@@ -18,50 +18,96 @@ const ChatList = () => {
   const [rename, setRename] = useState(null);
   const [error, setError] = useState(false);
   const { title, setTitle } = useContext(ChatTitleContext);
-
+  const { searchActive, setSearchActive } = useContext(ProfileWindowContext);
+  const [searchContent, setSearchContent] = useState("");
   useEffect(() => {
     setLoading(true);
     setError(false);
-    get(`api/chats/`, { page: numPage })
-      .then((res) => {
-        if (res?.ok === false || !res?.results) {
+    if (!searchActive) {
+      get(`api/chats/`, { page: numPage })
+        .then((res) => {
+          if (res?.ok === false || !res?.results) {
+            setError(true);
+            setChats([]);
+            setIsNext(false);
+            return;
+          }
+          setChats(res.results);
+          setIsNext(!!res.next);
+        })
+        .catch((err) => {
+          console.error(err);
           setError(true);
           setChats([]);
           setIsNext(false);
-          return;
-        }
-        setChats(res.results);
-        setIsNext(!!res.next);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-        setChats([]);
-        setIsNext(false);
-      })
-      .finally(() => setLoading(false));
-  }, [numPage, numDeleted, rename]);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      get(`api/chats/search`, { page: numPage, content: searchContent })
+        .then((res) => {
+          if (res?.ok === false || !res?.results) {
+            setError(true);
+            setChats([]);
+            setIsNext(false);
+            return;
+          }
+          setChats(res.results);
+          setIsNext(!!res.next);
+        })
+        .catch((err) => {
+          console.error(err);
+          setError(true);
+          setChats([]);
+          setIsNext(false);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [numPage, numDeleted, rename, searchActive, searchContent]);
+
+  useEffect(() => {
+    return () => setSearchActive(false);
+  }, [setSearchActive]);
 
   return (
     <div className={styles.sectionLayout}>
       <div className={styles.chatList}>
-        <h3 className={styles.chatTitle}>Chats</h3>
+        {searchActive ? (
+          <div className={styles.searchBar}>
+            <input
+              type="search"
+              className={styles.formInput}
+              onChange={(e) => setSearchContent(e.target.value)}
+            />
+            <img
+              src="/imgs/close.png"
+              type="button"
+              className={styles.closeButton}
+              onClick={() => {
+                setSearchActive(false);
+              }}
+            />
+          </div>
+        ) : (
+          <h3 className={styles.chatTitle}>Chats</h3>
+        )}
         {error ? <p className={styles.errorBox}>error fetching data</p> : null}
         {loading
           ? "Loading chats..."
-          : chats.map((entry) => (
-              <ChatEntry
-                key={entry["id"]}
-                title={entry["title"]}
-                id={entry["id"]}
-                setNumDeleted={setNumDeleted}
-                numDeleted={numDeleted}
-                rename={rename === entry["id"]}
-                setRename={setRename}
-                setContextTitle={setTitle}
-                setError={setError}
-              />
-            ))}
+          : chats.length > 0
+            ? chats.map((entry) => (
+                <ChatEntry
+                  key={entry["id"]}
+                  title={entry["title"]}
+                  id={entry["id"]}
+                  setNumDeleted={setNumDeleted}
+                  numDeleted={numDeleted}
+                  rename={rename === entry["id"]}
+                  setRename={setRename}
+                  setContextTitle={setTitle}
+                  setError={setError}
+                />
+              ))
+            : "No chats found"}
       </div>
       <div className={styles.buttons}>
         <input
