@@ -55,6 +55,13 @@ const ChatWindow = ({ id, title }) => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      if (messages[messages.length - 1].role === "user")
+        setLoadingReply(true);
+    }
+  }, [messages])
+
   const handleSendMessage = async (text) => {
     const msg = {
       role: "user",
