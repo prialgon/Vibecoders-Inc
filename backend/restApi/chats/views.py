@@ -44,8 +44,6 @@ class ChatSearchView(generics.ListAPIView):
         if "content" in self.request.query_params:
             text = self.request.query_params.get("content")
 
-            results = []
-
             return Chat.objects.filter(
                 Q(user_id=user_id)
                 & (Q(title__icontains=text) | Q(messages__content__icontains=text))
