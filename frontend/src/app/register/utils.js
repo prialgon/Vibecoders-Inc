@@ -49,10 +49,10 @@ export const doRegister = async (event) => {
     return;
   }
   let success = false;
+  let responseData = null;
   try {
     const response = await post(registerPath, registerPayload, false);
-    const responseData = await response.json();
-    console.log(responseData);
+    responseData = await response.json();
 
     if (!response.ok) {
       document.getElementById("registerError").innerHTML =
@@ -67,6 +67,8 @@ export const doRegister = async (event) => {
   }
 
   if (success) {
-    redirect("/login");
+    localStorage.setItem("access", responseData.access);
+    localStorage.setItem("refresh", responseData.refresh);
+    redirect("/home");
   }
 };
