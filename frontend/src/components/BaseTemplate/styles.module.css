@@ -1,0 +1,18 @@
+.layout {
+  display: grid;
+  height: 100%;
+  grid-area: footer;
+  grid-template-rows: 5% 88% 7%;
+  grid-template-columns: 100%;
+  grid-template-areas: "header" "content" "footer";
+}
+
+.content {
+  grid-area: content;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: black;
+  position: relative;
+}

@@ -54,6 +54,9 @@ RUN npm ci --only=production && npm cache clean --force
 # Copiar archivos de configuración
 COPY --from=builder /app/next.config.mjs ./
 
+# Copiar archivos públicos
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
 # Copiar el build de Next.js
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules

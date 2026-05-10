@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from django.db.models import Q
+
 from ai.llm_service import call_llm
 from django.utils import timezone
 from rest_framework import generics
@@ -14,6 +16,7 @@ from .serializers import (
     ChatListCreateSerializer,
     ChatMessageCreateSerializer,
     ChatMessageSerializer,
+    ChatPatchSerializer,
 )
 
 # Create your views here.
@@ -32,9 +35,28 @@ class ChatListView(generics.ListCreateAPIView):
         serializer.save(user_id=self.request.user)
 
 
-class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
+class ChatSearchView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ChatListCreateSerializer
+
+    def get_queryset(self):
+        user_id = self.request.user
+        if "content" in self.request.query_params:
+            text = self.request.query_params.get("content")
+
+            return Chat.objects.filter(
+                Q(user_id=user_id)
+                & (Q(title__icontains=text) | Q(messages__content__icontains=text))
+            ).distinct()
+
+        else:
+            return Chat.objects.filter(user_id=user_id)
+
+
+class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ChatDetailSerializer
+    http_method_names = ["get", "post", "patch", "delete"]
 
     def get_queryset(self):
         user_id = self.request.user
@@ -73,7 +95,14 @@ class ChatDetailAPIView(generics.RetrieveDestroyAPIView):
         llm_response = call_llm(history)
 
         msg = ChatMessage.objects.create(
-            chat_id=chat, role="assistant", content=llm_response
+            chat_id=chat, role="system", content=llm_response
         )
         serializer_llm = ChatMessageSerializer(msg)
         return Response(serializer_llm.data, status=201)
+
+    def patch(self, request, *args, **kwargs):
+        chat = self.get_object()
+        serializer = ChatPatchSerializer(chat, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=201)

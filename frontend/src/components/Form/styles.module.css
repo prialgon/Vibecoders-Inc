@@ -1,0 +1,52 @@
+.formButton {
+  width: 20rem;
+  height: 2.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: black;
+  background-color: #c0c0c0;
+  border-width: 0.1rem;
+  transition: all 0.01s ease;
+  border-color: #777777;
+  box-shadow: 0 0.1rem black;
+  margin-bottom: 0.5rem;
+}
+
+.formButton:hover {
+  background-color: darkgray;
+}
+
+.formButton:active {
+  transform: translateY(0.1rem);
+  box-shadow: 0 0.05rem black;
+}
+
+.formChildren {
+  display: flex;
+  grid-area: content;
+  flex-direction: column;
+  gap: 2%;
+  padding: 4rem;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+
+.extra {
+  margin-top: 5%;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  margin: 0.5rem;
+}
+
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
