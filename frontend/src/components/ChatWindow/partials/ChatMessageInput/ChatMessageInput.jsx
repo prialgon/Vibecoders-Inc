@@ -15,6 +15,14 @@ const ChatMessageInput = ({ handleSendMessage }) => {
     element.style.overflowY = newHeight > maxHeight ? "auto" : "hidden";
   };
 
+  const resetInputHeight = () => {
+    const element = ref.current;
+    if (!element) return;
+
+    element.style.height = "";
+    element.style.overflowY = "hidden";
+  };
+
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -28,6 +36,7 @@ const ChatMessageInput = ({ handleSendMessage }) => {
     setSending(true);
 
     setInput("");
+    resetInputHeight();
 
     try {
       await handleSendMessage(text);
