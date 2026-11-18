@@ -73,6 +73,9 @@ const ProfileWindow = () => {
             <>
               <p>Available Messages: {usage.messages_limit - usage.messages_used}</p>
               <p>Reset date: {new Date(usage.reset_date).toLocaleString()}</p>
+              <p>Available Tokens: {usage.tokens_limit - usage.tokens_used}</p>
+              <p>Tokens Default Limit: {usage.tokens_limit}</p>
+              <p>Tokens Used: {usage.tokens_used}</p>
             </>
           ) : (
             "..."
